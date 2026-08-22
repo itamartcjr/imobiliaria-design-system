@@ -107,15 +107,26 @@ function section(title, subtitle, body, actions = "", id = "") {
     </section>`;
 }
 
+function colorValue(value) {
+  const raw = String(value ?? "").trim();
+  return /^(#(?:[0-9a-f]{3,8})|rgba?\(|hsla?\(|color\()/i.test(raw) ? raw : "";
+}
+
+function tokenValueCell(value) {
+  const color = colorValue(value);
+  const swatch = color ? `<span class="token-value__swatch" style="--token-swatch:${escapeHtml(color)}"></span>` : "";
+  return `<span class="token-value">${swatch}<code>${escapeHtml(value)}</code></span>`;
+}
+
 function tokenTable(rows) {
   return `<div class="table-wrap"><table class="token-table">
     <thead><tr><th>Token</th><th>Dark</th><th>Light</th><th>Uso</th></tr></thead>
-    <tbody>${rows.map((row) => `<tr><td><code>${escapeHtml(row.token)}</code></td><td><code>${escapeHtml(row.dark)}</code></td><td><code>${escapeHtml(row.light)}</code></td><td>${escapeHtml(row.usage)}</td></tr>`).join("")}</tbody>
+    <tbody>${rows.map((row) => `<tr><td><code>${escapeHtml(row.token)}</code></td><td>${tokenValueCell(row.dark)}</td><td>${tokenValueCell(row.light)}</td><td>${escapeHtml(row.usage)}</td></tr>`).join("")}</tbody>
   </table></div>`;
 }
 
 function simpleCards(items, className = "preview-grid") {
-  return `<div class="${className}">${items.map((item) => `<article class="preview-card ${item.modifier || ""}">${item.html}</article>`).join("")}</div>`;
+  return `<div class="${className} visual-grid">${items.map((item) => `<article class="visual-item ${item.modifier || ""}">${item.html}</article>`).join("")}</div>`;
 }
 
 function codeBlock(code, label = "Código") {
@@ -140,10 +151,10 @@ function pageArticle(title, body, extra = "") { return `<article class="prose"><
 
 function brandSwatches() {
   return `<div class="swatch-grid">
-    <div class="swatch"><span>Admin canvas</span><strong>#272727</strong></div>
-    <div class="swatch"><span>Admin surface</span><strong>#2C2C2C</strong></div>
-    <div class="swatch"><span>Brand accent</span><strong>#DB0423</strong></div>
-    <div class="swatch"><span>Carbon focus</span><strong>#78A9FF</strong></div>
+    <div class="swatch" style="--swatch-color:#272727"><span>Admin canvas</span><strong>#272727</strong></div>
+    <div class="swatch" style="--swatch-color:#2C2C2C"><span>Admin surface</span><strong>#2C2C2C</strong></div>
+    <div class="swatch" style="--swatch-color:#DB0423"><span>Brand accent</span><strong>#DB0423</strong></div>
+    <div class="swatch" style="--swatch-color:#78A9FF;--swatch-text:#161616"><span>Carbon focus</span><strong>#78A9FF</strong></div>
   </div>`;
 }
 
