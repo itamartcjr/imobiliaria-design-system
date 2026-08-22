@@ -17,20 +17,26 @@ function contentType(file) {
   return "application/octet-stream";
 }
 
+function resolveFile(requestPath) {
+  const relative = requestPath.replace(/^\/+/, "");
+  let filePath = path.resolve(dist, relative || "index.html");
+  if (filePath !== dist && !filePath.startsWith(`${dist}${path.sep}`)) return null;
+  if (fs.existsSync(filePath) && fs.statSync(filePath).isDirectory()) filePath = path.join(filePath, "index.html");
+  return fs.existsSync(filePath) && fs.statSync(filePath).isFile() ? filePath : null;
+}
+
 http.createServer((req, res) => {
   const requestPath = decodeURIComponent((req.url || "/").split("?")[0]);
-  let filePath = path.join(dist, requestPath === "/" ? "index.html" : requestPath);
-  if (fs.existsSync(filePath) && fs.statSync(filePath).isDirectory()) {
-    filePath = path.join(filePath, "index.html");
-  }
-  if (!fs.existsSync(filePath)) {
-    const fallback = path.join(dist, "index.html");
-    if (fs.existsSync(fallback)) {
-      res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
-      res.end(fs.readFileSync(fallback));
+  const filePath = resolveFile(requestPath);
+
+  if (!filePath) {
+    const notFound = path.join(dist, "404.html");
+    if (fs.existsSync(notFound)) {
+      res.writeHead(404, { "Content-Type": "text/html; charset=utf-8" });
+      res.end(fs.readFileSync(notFound));
       return;
     }
-    res.writeHead(404);
+    res.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" });
     res.end("Not found");
     return;
   }
@@ -38,5 +44,5 @@ http.createServer((req, res) => {
   res.writeHead(200, { "Content-Type": contentType(filePath) });
   res.end(fs.readFileSync(filePath));
 }).listen(port, () => {
-  console.log(`Serving ${dist} at http://localhost:${port}`);
+  console.log(`Serving static ${dist} at http://localhost:${port}`);
 });
