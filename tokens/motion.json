@@ -1,10 +1,15 @@
 {
   "duration": {
-    "instant": 0,
+    "fast-01": 70,
+    "fast-02": 110,
+    "moderate-01": 150,
+    "moderate-02": 240,
+    "slow-01": 400,
+    "slow-02": 700,
     "fast": 70,
-    "normal": 160,
+    "normal": 150,
     "slow": 240,
-    "expressive": 320
+    "expressive": 400
   },
   "easing": {
     "productiveStandard": "cubic-bezier(0.2, 0, 0.38, 0.9)",

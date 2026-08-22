@@ -23,6 +23,11 @@ for (const [slug, page] of Object.entries(pageData)) {
 for (const jsFile of fs.readdirSync(path.join(root, "src", "assets", "js")).filter((file) => file.endsWith(".js"))) {
   fs.copyFileSync(path.join(root, "src", "assets", "js", jsFile), path.join(assetsJsDir, jsFile));
 }
+
+const enhancementParts = ["enhancements-1.js.part", "enhancements-2.js.part", "enhancements-3.js.part"];
+const enhancementSource = enhancementParts.map((file) => fs.readFileSync(path.join(root, "src", "assets", "js", file), "utf8")).join("");
+writeFile(path.join(assetsJsDir, "enhancements.js"), enhancementSource);
+
 writeFile(path.join(dist, "_redirects"), "");
 writeFile(path.join(assetsJsDir, "search-index.js"), `window.DESIGN_SYSTEM_SEARCH_INDEX = ${JSON.stringify(Object.entries(pageData).map(([href, page]) => ({
   title: page.title,

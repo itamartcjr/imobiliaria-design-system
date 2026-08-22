@@ -1,0 +1,58 @@
+      case 'Property Result List': return `<div class="re-result-list"><div class="re-results-head"><div><strong>164 imóveis</strong><span>Resultados ordenados por destaque e atualização.</span></div><button class="secondary-button">Ordenar</button></div><div class="re-related-grid">${propertyCard(true)}${propertyCard(true)}${propertyCard(true)}</div></div>`;
+      case 'Property Map Result': return `<div class="re-map-result"><div class="re-map"><span class="re-map-grid"></span><button class="re-pin re-pin--a">R$ 1,2 mi</button><button class="re-pin re-pin--b">R$ 980 mil</button><button class="re-pin re-pin--c">R$ 1,5 mi</button></div>${propertyCard(true)}</div>`;
+      case 'Property Detail Header': return propertyDetailHeader();
+      case 'Contact Card': return `<article class="re-contact"><span class="re-avatar">IT</span><div><strong>Itamar Corretor</strong><span>CRECI 123456-F</span><small>Especialista em imóveis residenciais</small></div><div class="re-contact__actions"><button class="secondary-button">WhatsApp</button><button class="primary-button">Contato</button></div></article>`;
+      case 'Lead Card': return `<article class="re-ops-card"><div>${badge('Qualificado','success')}<code>#LD-204</code></div><strong>Mariana Souza</strong><span>Interesse: Apartamento em Moema</span><small>Próxima ação · retorno hoje às 16h</small><footer><span>Origem: site</span><button class="ghost-button">Abrir lead</button></footer></article>`;
+      case 'Lead Status': return `<div class="re-pipeline">${['Novo','Contatado','Qualificado','Visita','Proposta','Ganho','Perdido'].map((x,i)=>`<div class="${i===2?'is-current':''}"><i>${i+1}</i><span>${x}</span></div>`).join('')}</div>`;
+      case 'Client Card': return `<article class="re-ops-card"><div>${badge('Comprador')}<code>Cliente</code></div><strong>Rafael Almeida</strong><span>Busca: 2–3 quartos · Zona Sul</span><small>Faixa: R$ 900 mil – R$ 1,4 mi</small><footer><span>4 imóveis salvos</span><button class="ghost-button">Ver perfil</button></footer></article>`;
+      case 'Broker Card': return `<article class="re-contact"><span class="re-avatar">MC</span><div><strong>Marina Costa</strong><span>CRECI 654321-F</span><small>12 leads ativos · 4 visitas hoje</small></div>${badge('Disponível','success')}</article>`;
+      case 'Appointment Card': return `<article class="re-appointment"><div class="re-date"><strong>24</strong><span>AGO</span></div><div><strong>Visita · Apartamento em Moema</strong><span>14:30 · Mariana Souza</span><small>Corretor: Marina Costa</small></div>${badge('Confirmada','success')}</article>`;
+      case 'Contract Status': return `<div class="re-status-timeline">${['Rascunho','Assinatura pendente','Assinado','Vigente'].map((x,i)=>`<div class="${i<3?'is-done':''}"><i>${i<3?'✓':i+1}</i><span>${x}</span></div>`).join('')}</div>`;
+      case 'Proposal Status': return `<div class="re-status-timeline">${['Rascunho','Enviada','Negociação','Aceita'].map((x,i)=>`<div class="${i<2?'is-done':''} ${i===2?'is-current':''}"><i>${i<2?'✓':i+1}</i><span>${x}</span></div>`).join('')}</div>`;
+      case 'Property Form': return `<form class="re-form"><header><div><span class="eyebrow">Cadastro de imóvel</span><h3>Informações principais</h3></div>${badge('Rascunho')}</header><div class="re-form-grid">${field('Título do anúncio','Apartamento em Moema')}${field('Código','AP-001')}${field('Tipo','Apartamento')}${field('Finalidade','Venda')}${field('Preço','R$ 1.250.000')}${field('Área útil','92 m²')}</div><div class="re-form-actions"><button class="secondary-button" type="button">Salvar rascunho</button><button class="primary-button" type="button">Continuar</button></div></form>`;
+      case 'Lead Form': return `<form class="re-form"><header><div><span class="eyebrow">Lead</span><h3>Novo contato</h3></div></header><div class="re-form-grid">${field('Nome','Mariana Souza')}${field('WhatsApp','(11) 99999-9999')}${field('E-mail','mariana@email.com')}${field('Origem','Site')}${field('Imóvel de interesse','AP-001')}${field('Responsável','Marina Costa')}</div><div class="re-form-actions"><button class="primary-button" type="button">Criar lead</button></div></form>`;
+      case 'Client Form': return `<form class="re-form"><header><div><span class="eyebrow">Cliente</span><h3>Perfil e preferências</h3></div></header><div class="re-form-grid">${field('Nome','Rafael Almeida')}${field('Contato','(11) 98888-0000')}${field('Objetivo','Comprar')}${field('Região','Zona Sul')}${field('Faixa mínima','R$ 900.000')}${field('Faixa máxima','R$ 1.400.000')}</div><div class="re-form-actions"><button class="primary-button" type="button">Salvar cliente</button></div></form>`;
+      case 'Dashboard Metric': return `<div class="re-metrics">${[['Leads novos','28','+12%'],['Imóveis ativos','164','7 em revisão'],['Visitas','42','esta semana'],['VGV em proposta','R$ 4,8M','+8%']].map(x=>`<article><span>${x[0]}</span><strong>${x[1]}</strong><small>${x[2]}</small></article>`).join('')}</div>`;
+      case 'Activity Feed': return `<div class="re-feed">${[['10:42','Proposta atualizada','Mariana Souza enviou contraproposta de R$ 1,18 mi.'],['09:15','Visita confirmada','Apartamento em Moema · hoje às 14:30.'],['Ontem','Lead qualificado','Rafael Almeida avançou para Qualificado.']].map(x=>`<article><time>${x[0]}</time><i></i><div><strong>${x[1]}</strong><span>${x[2]}</span></div></article>`).join('')}</div>`;
+      default: return `<div class="re-generic"><strong>${name}</strong><p>Specimen imobiliário baseado na estrutura do front.</p></div>`;
+    }
+  }
+
+  function mountRealEstateComponent() {
+    if (category !== 'Real estate') return;
+    const stage = $('#preview .component-stage');
+    if (stage) {
+      stage.classList.add('component-stage--real-estate');
+      stage.classList.remove('component-stage--public');
+      stage.innerHTML = `<div class="re-live-preview">${realEstatePreview(title)}</div>`;
+    }
+
+    $$('#family .family-board').forEach((board) => {
+      const cells = $$('.family-sample', board);
+      cells.forEach((cell, index) => {
+        if (index > 7 && ['Property Gallery','Property Result List','Property Map Result','Property Form','Lead Form','Client Form'].includes(title)) return;
+        cell.innerHTML = `<div class="re-family-compact">${realEstatePreview(title)}</div>`;
+      });
+    });
+  }
+
+  function mountPublicPatterns() {
+    if (title !== 'Public Property Detail' && title !== 'Public Property Search') return;
+    if ($('#pattern-live')) return;
+    const intent = $('#intent');
+    if (!intent) return;
+    const section = document.createElement('section');
+    section.id = 'pattern-live';
+    section.className = 'section section--pattern-live';
+    section.innerHTML = `<div class="section__header"><div><p class="eyebrow">Front structure + DS visual</p><h2>Live pattern</h2></div><span class="coverage-badge">${title === 'Public Property Detail' ? 'Gallery · facts · lead · related' : 'Search · filters · cards · map'}</span></div><div class="re-pattern-stage">${title === 'Public Property Detail' ? detailPattern() : searchPattern()}</div>`;
+    intent.after(section);
+  }
+
+  function mountMotion() {
+    if (title !== 'Motion' || $('#motion-lab')) return;
+    const durations = $('#durations') || $('main .section');
+    if (!durations) return;
+    const tableBody = $('.token-table tbody', durations);
+    if (tableBody) {
+      const rows = [
+        ['duration.fast-01','70ms','Botão, toggle e feedback imediato.'],

@@ -1,0 +1,52 @@
+        ['duration.fast-02','110ms','Fade e microinteração curta.'],
+        ['duration.moderate-01','150ms','Dropdown, pequena expansão e deslocamento curto.'],
+        ['duration.moderate-02','240ms','Toast, comunicação de sistema e expansão.'],
+        ['duration.slow-01','400ms','Expansão grande e transição importante.'],
+        ['duration.slow-02','700ms','Dimming de backdrop e transição de fundo.'],
+      ];
+      tableBody.innerHTML = rows.map(([token,value,usage]) => `<tr><td><code>${token}</code></td><td><span class="token-value"><code>${value}</code></span></td><td><span class="token-value"><code>${value}</code></span></td><td>${usage}</td></tr>`).join('');
+    }
+    const section = document.createElement('section');
+    section.id = 'motion-lab';
+    section.className = 'section';
+    section.innerHTML = `<div class="section__header"><div><p class="eyebrow">Carbon motion</p><h2>Motion lab</h2></div><span class="coverage-badge">Productive first</span></div><div class="motion-lab"><div class="motion-duration-row">${[['fast-01','70ms'],['fast-02','110ms'],['moderate-01','150ms'],['moderate-02','240ms'],['slow-01','400ms'],['slow-02','700ms']].map((x,i)=>`<button type="button" class="motion-chip motion-chip--${i}" data-motion-chip><span>${x[0]}</span><strong>${x[1]}</strong></button>`).join('')}</div><div class="motion-scenes"><article><span class="eyebrow">Productive</span><h3>Microinteraction</h3><button class="primary-button motion-action" type="button">Hover / press</button><p>Standard productive · 70–150ms.</p></article><article><span class="eyebrow">Entrance</span><h3>Dropdown / toast</h3><button class="secondary-button" type="button" data-motion-toggle>Mostrar feedback</button><div class="motion-toast" data-motion-toast hidden><strong>Alteração salva</strong><span>Entrance productive · 150–240ms.</span></div></article><article><span class="eyebrow">Expressive</span><h3>Large transition</h3><div class="motion-panel" tabindex="0"><span>Painel</span></div><p>400ms só quando a mudança de contexto justifica.</p></article></div><div class="motion-easing-grid"><article><strong>Standard productive</strong><code>cubic-bezier(0.2, 0, 0.38, 0.9)</code></article><article><strong>Entrance productive</strong><code>cubic-bezier(0, 0, 0.38, 0.9)</code></article><article><strong>Exit productive</strong><code>cubic-bezier(0.2, 0, 1, 0.9)</code></article></div></div>`;
+    durations.after(section);
+    $('[data-motion-toggle]', section)?.addEventListener('click', () => {
+      const toast = $('[data-motion-toast]', section);
+      if (!toast) return;
+      if (toast.hidden) { toast.hidden = false; requestAnimationFrame(() => toast.classList.add('is-visible')); }
+      else { toast.classList.remove('is-visible'); window.setTimeout(() => { toast.hidden = true; }, 160); }
+    });
+  }
+
+  function bindGallery() {
+    $$('[data-re-gallery]').forEach((root) => {
+      const overlay = $('[data-re-lightbox]', root);
+      if (!overlay) return;
+      const labels = ['Sala de estar','Cozinha','Suíte','Varanda','Fachada'];
+      let current = 0;
+      const image = $('[data-re-image]', root);
+      const caption = $('[data-re-caption]', root);
+      const counter = $('[data-re-counter]', root);
+      const render = () => {
+        image?.classList.remove('re-photo--0','re-photo--1','re-photo--2','re-photo--3','re-photo--4','re-photo--5');
+        image?.classList.add(`re-photo--${current}`);
+        if (caption) caption.textContent = labels[current];
+        if (counter) counter.textContent = `${current + 1} / ${labels.length}`;
+      };
+      const open = (index) => { current = Math.max(0, Math.min(labels.length - 1, index)); render(); overlay.hidden = false; requestAnimationFrame(() => overlay.classList.add('is-open')); };
+      const close = () => { overlay.classList.remove('is-open'); window.setTimeout(() => { overlay.hidden = true; }, 240); };
+      $$('[data-re-photo]', root).forEach((button) => button.addEventListener('click', () => open(Number(button.dataset.rePhoto || 0))));
+      $$('[data-re-open-all]', root).forEach((button) => button.addEventListener('click', () => open(0)));
+      $('[data-re-close]', root)?.addEventListener('click', close);
+      $('[data-re-prev]', root)?.addEventListener('click', () => { current = (current - 1 + labels.length) % labels.length; render(); });
+      $('[data-re-next]', root)?.addEventListener('click', () => { current = (current + 1) % labels.length; render(); });
+      $('.re-lightbox__backdrop', root)?.addEventListener('click', close);
+    });
+  }
+
+  mountRealEstateComponent();
+  mountPublicPatterns();
+  mountMotion();
+  bindGallery();
+})();

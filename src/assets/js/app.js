@@ -69,7 +69,17 @@
     });
   });
 
-  const specimenScript = document.createElement("script");
-  specimenScript.src = `${docRoot}assets/js/specimens.js`;
-  document.body.appendChild(specimenScript);
+  function loadScript(src) {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = `${docRoot}assets/js/${src}`;
+      script.onload = resolve;
+      script.onerror = reject;
+      document.body.appendChild(script);
+    });
+  }
+
+  loadScript("specimens.js")
+    .then(() => loadScript("enhancements.js"))
+    .catch(() => {});
 })();

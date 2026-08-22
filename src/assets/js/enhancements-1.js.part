@@ -1,0 +1,58 @@
+(function () {
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+  const title = $('.hero h1')?.textContent.trim() || '';
+  const category = $('.hero .eyebrow')?.textContent.trim() || '';
+
+  const photo = (label, index = 0, extra = '') => `<button class="re-photo re-photo--${index % 6} ${extra}" type="button" data-re-photo="${index}" aria-label="Abrir ${label}"><span>${label}</span></button>`;
+  const fact = (value, label) => `<div class="re-fact"><strong>${value}</strong><span>${label}</span></div>`;
+  const infoRow = (label, value) => `<div class="re-info-row"><span>${label}</span><strong>${value}</strong></div>`;
+  const amenity = (label) => `<div class="re-amenity"><span class="re-check">✓</span><span>${label}</span></div>`;
+  const badge = (label, tone = '') => `<span class="re-badge ${tone ? `re-badge--${tone}` : ''}">${label}</span>`;
+  const field = (label, placeholder = '') => `<label class="re-field"><span>${label}</span><input placeholder="${placeholder || label}" /></label>`;
+
+  function propertyCard(compact = false) {
+    return `<article class="re-property-card ${compact ? 're-property-card--compact' : ''}">
+      <div class="re-property-card__media re-photo--0"><span class="re-media-label">Sala de estar</span>${badge('Destaque', 'accent')}<button class="re-favorite" type="button" aria-label="Favoritar">♡</button></div>
+      <div class="re-property-card__body">
+        <div class="re-property-card__title"><strong>Apartamento em Moema</strong><code>AP-001</code></div>
+        <span>Moema, São Paulo</span><span>Apartamento · 2 qtos. · 2 vagas · 92 m²</span><b>R$ 1.250.000</b>
+      </div>
+    </article>`;
+  }
+
+  function gallery(showOverlay = true) {
+    return `<div class="re-gallery" data-re-gallery>
+      <div class="re-gallery__mosaic">
+        ${photo('Sala de estar', 0, 're-gallery__main')}
+        <div class="re-gallery__side">${photo('Cozinha', 1)}${photo('Suíte', 2)}${photo('Varanda', 3)}${photo('Fachada', 4)}</div>
+        <button class="re-gallery__all secondary-button" type="button" data-re-open-all>▦ Mostrar todas as fotos</button>
+      </div>
+      <div class="re-gallery__tour"><div><span class="eyebrow">Tour por fotos</span><strong>Explore por ambientes</strong></div><div class="re-tour-rail">${['Sala','Cozinha','Suíte','Varanda','Fachada'].map((name,i)=>`<button type="button" data-re-photo="${i}"><i class="re-photo--${i}"></i><span>${name}</span></button>`).join('')}</div></div>
+      ${showOverlay ? `<div class="re-lightbox" data-re-lightbox hidden><div class="re-lightbox__backdrop"></div><div class="re-lightbox__chrome"><button class="icon-button" type="button" data-re-close aria-label="Fechar">×</button><span data-re-counter>1 / 5</span><button class="secondary-button" type="button" data-re-open-all>Tour por fotos</button></div><div class="re-lightbox__stage"><button class="icon-button" type="button" data-re-prev aria-label="Anterior">←</button><div class="re-lightbox__image re-photo--0" data-re-image><span data-re-caption>Sala de estar</span></div><button class="icon-button" type="button" data-re-next aria-label="Próxima">→</button></div></div>` : ''}
+    </div>`;
+  }
+
+  function propertyDetailHeader() {
+    return `<div class="re-detail-header"><div><div class="re-detail-title-row"><h3>Apartamento em Moema</h3>${badge('Destaque','accent')}</div><p>Moema, São Paulo · Código AP-001</p></div><div class="re-detail-actions"><button class="secondary-button">Compartilhar</button><button class="primary-button">Tenho interesse</button></div></div>`;
+  }
+
+  function detailPattern() {
+    return `<div class="re-pattern re-pattern--detail">${propertyDetailHeader()}${gallery(false)}<div class="re-detail-layout"><main class="re-detail-main"><section><div class="re-section-copy"><span class="eyebrow">Apartamento · Venda</span><h3>Apartamento em Moema</h3></div><div class="re-facts">${fact('92 m²','Área')}${fact('2','Quartos')}${fact('1','Suíte')}${fact('2','Vagas')}</div></section><section><h3>Mais sobre este imóvel</h3><p>Planta bem distribuída, iluminação natural e integração entre sala e varanda. A apresentação segue o conteúdo real do front, mas usa tokens visuais do design system.</p></section><section><h3>Valores e custos</h3><div class="re-info-list">${infoRow('Valor do imóvel','R$ 1.250.000')}${infoRow('Condomínio','R$ 1.180')}${infoRow('IPTU','R$ 420 / mês')}</div></section><section><h3>O que este imóvel oferece</h3><div class="re-amenities">${['Ar-condicionado','Varanda','Cozinha planejada','Elevador','Portaria 24h','Academia'].map(amenity).join('')}</div></section><section><h3>Localização</h3><div class="re-location"><i>⌖</i><div><strong>Moema</strong><span>São Paulo - SP</span><p>Próximo a serviços, parques e mobilidade urbana.</p></div></div></section><section><h3>Plantas e tipologias</h3><div class="re-typologies"><article><strong>Tipo A</strong><span>92 m² · 2 quartos · 1 suíte</span><b>R$ 1.250.000</b></article><article><strong>Tipo B</strong><span>118 m² · 3 quartos · 2 suítes</span><b>R$ 1.590.000</b></article></div></section></main><aside class="re-detail-aside"><div class="re-price-box"><span>Valor do imóvel</span><strong>R$ 1.250.000</strong><small>R$ 13.586 por m²</small>${infoRow('Condomínio','R$ 1.180')}${infoRow('IPTU','R$ 420')}</div><form class="re-lead-box"><span class="eyebrow">Fale com um corretor</span><h3>Tenho interesse</h3>${field('Nome','Seu nome')}${field('WhatsApp','(11) 99999-9999')}${field('E-mail','voce@email.com')}<button class="primary-button" type="button">Enviar interesse</button></form></aside></div><section class="re-related"><div class="re-section-copy"><span class="eyebrow">Relacionados</span><h3>Imóveis semelhantes</h3></div><div class="re-related-grid">${propertyCard(true)}${propertyCard(true)}${propertyCard(true)}</div></section></div>`;
+  }
+
+  function searchPattern() {
+    return `<div class="re-pattern re-pattern--search"><div class="re-search-hero"><div><span class="eyebrow">Encontrar imóvel</span><h3>O imóvel certo, com menos ruído.</h3></div><div class="re-search-bar"><input placeholder="Bairro, cidade, condomínio ou código" /><button class="primary-button">Buscar</button></div></div><div class="re-category-rail">${['Comprar','Alugar','Apartamentos','Casas','Lançamentos'].map((x,i)=>`<button class="${i===0?'is-active':''}" type="button">${x}</button>`).join('')}</div><div class="re-results-head"><div><strong>164 imóveis</strong><span>Explore as opções publicadas pela imobiliária.</span></div><button class="secondary-button">Filtros</button></div><div class="re-filter-chips">${badge('Venda')}${badge('São Paulo')}${badge('2+ quartos')}</div><div class="re-search-layout"><div class="re-result-grid">${propertyCard(true)}${propertyCard(true)}${propertyCard(true)}${propertyCard(true)}</div><div class="re-map"><span class="re-map-grid"></span><button class="re-pin re-pin--a">R$ 1,2 mi</button><button class="re-pin re-pin--b">R$ 980 mil</button><button class="re-pin re-pin--c">R$ 1,5 mi</button></div></div><div class="re-pagination"><button class="secondary-button">Anterior</button><span>Página 1</span><button class="secondary-button">Próxima</button></div></div>`;
+  }
+
+  function realEstatePreview(name) {
+    switch (name) {
+      case 'Property Card': return propertyCard();
+      case 'Property Status': return `<div class="re-status-row">${['Rascunho','Em revisão','Ativo','Negociação','Fechado','Inativo'].map((x,i)=>badge(x,['neutral','warning','success','accent','success','neutral'][i])).join('')}</div>`;
+      case 'Property Price': return `<div class="re-price-display"><span>Venda</span><strong>R$ 1.250.000</strong><small>R$ 13.586/m²</small><div>${infoRow('Condomínio','R$ 1.180')}${infoRow('IPTU','R$ 420 / mês')}</div></div>`;
+      case 'Property Gallery': return gallery();
+      case 'Property Media': return `<div class="re-media-board"><div class="re-media-board__hero re-photo--0"><span>Foto principal</span></div><div class="re-media-board__items">${['Vídeo','Planta','Fachada'].map((x,i)=>`<div class="re-media-item re-photo--${i+2}"><span>${x}</span><small>${i===0?'02:14':'Imagem'}</small></div>`).join('')}</div></div>`;
+      case 'Property Features': return `<div><div class="re-facts">${fact('92 m²','Área')}${fact('2','Quartos')}${fact('1','Suíte')}${fact('2','Vagas')}</div><div class="re-amenities">${['Varanda','Ar-condicionado','Academia','Piscina','Portaria 24h','Pet friendly'].map(amenity).join('')}</div></div>`;
+      case 'Property Address': return `<div class="re-location"><i>⌖</i><div><strong>Moema</strong><span>São Paulo - SP</span><p>Endereço completo no admin; localização aproximada no público quando necessário.</p></div></div>`;
+      case 'Property Search': return `<div class="re-search-component"><div class="re-search-bar"><input placeholder="Bairro, cidade, condomínio ou código" /><button class="primary-button">Buscar</button></div><div class="re-filter-chips">${badge('Comprar')}${badge('Apartamento')}${badge('São Paulo')}</div></div>`;
+      case 'Property Filters': return `<div class="re-filter-panel"><div class="re-filter-toolbar"><button class="secondary-button">Finalidade</button><button class="secondary-button">Tipo</button><button class="secondary-button">Preço</button><button class="secondary-button">Quartos</button><button class="secondary-button">Mais filtros</button></div><div class="re-filter-chips">${badge('Venda')}${badge('Apartamento')}${badge('2+ quartos')}</div></div>`;
