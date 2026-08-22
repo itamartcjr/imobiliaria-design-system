@@ -2,126 +2,126 @@ export const tokens = {
   "colors": {
     "background": {
       "canvas": {
-        "dark": "#090909",
-        "light": "#F5F0E8",
-        "usage": "Fundo principal da aplicação e da documentação."
+        "dark": "#272727",
+        "light": "#F4F4F4",
+        "usage": "Canvas principal. Dark segue o admin; light usa base neutra."
       },
       "surface": {
-        "dark": "#111214",
-        "light": "#FFFDF8",
-        "usage": "Cartões e superfícies base."
+        "dark": "#2C2C2C",
+        "light": "#FFFFFF",
+        "usage": "Superfície principal de cards, formulários e coleções."
       },
       "surfaceElevated": {
-        "dark": "#18191C",
+        "dark": "#303030",
         "light": "#FFFFFF",
-        "usage": "Superfícies elevadas, dropdowns e painéis."
+        "usage": "Dropdowns, modais e painéis elevados."
       },
       "surfaceInteractive": {
-        "dark": "#202125",
-        "light": "#F0EBE1",
-        "usage": "Hover, pressed e áreas clicáveis."
+        "dark": "#383838",
+        "light": "#E8E8E8",
+        "usage": "Hover, seleção neutra e áreas interativas."
       }
     },
     "text": {
       "primary": {
-        "dark": "#F5F0E8",
-        "light": "#171717",
+        "dark": "#FFFFFF",
+        "light": "#161616",
         "usage": "Texto principal."
       },
       "secondary": {
-        "dark": "#C7C1B7",
-        "light": "#55514A",
+        "dark": "rgba(255, 255, 255, 0.62)",
+        "light": "#525252",
         "usage": "Texto de apoio."
       },
       "tertiary": {
-        "dark": "#8A857A",
-        "light": "#7D786F",
-        "usage": "Texto auxiliar e metadados."
+        "dark": "rgba(255, 255, 255, 0.38)",
+        "light": "#6F6F6F",
+        "usage": "Metadados e texto auxiliar."
       },
       "inverse": {
-        "dark": "#090909",
+        "dark": "#FFFFFF",
         "light": "#FFFFFF",
-        "usage": "Texto sobre superfícies invertidas."
+        "usage": "Texto sobre ação primária e superfícies fortes."
       }
     },
     "border": {
       "subtle": {
-        "dark": "rgba(245, 240, 232, 0.08)",
-        "light": "rgba(23, 23, 23, 0.08)",
+        "dark": "rgba(255, 255, 255, 0.08)",
+        "light": "#E0E0E0",
         "usage": "Separadores discretos."
       },
       "default": {
-        "dark": "rgba(245, 240, 232, 0.14)",
-        "light": "rgba(23, 23, 23, 0.14)",
+        "dark": "rgba(255, 255, 255, 0.12)",
+        "light": "#C6C6C6",
         "usage": "Bordas padrão."
       },
       "strong": {
-        "dark": "rgba(245, 240, 232, 0.24)",
-        "light": "rgba(23, 23, 23, 0.22)",
-        "usage": "Contornos mais fortes e estados ativos."
+        "dark": "rgba(255, 255, 255, 0.22)",
+        "light": "#8D8D8D",
+        "usage": "Estados ativos e divisores de maior contraste."
       }
     },
     "accent": {
       "primary": {
-        "dark": "#D4FB00",
-        "light": "#D4FB00",
-        "usage": "Ação primária, seleção e foco importante."
+        "dark": "#DB0423",
+        "light": "#DB0423",
+        "usage": "Ação primária e identidade do admin."
       },
       "hover": {
-        "dark": "#E5FF4F",
-        "light": "#E5FF4F",
-        "usage": "Estado hover do accent."
+        "dark": "#FF3854",
+        "light": "#C4031F",
+        "usage": "Hover da ação primária."
       },
       "active": {
-        "dark": "#B6D400",
-        "light": "#B6D400",
-        "usage": "Pressed e estado ativo do accent."
+        "dark": "#B9021C",
+        "light": "#A90019",
+        "usage": "Pressed/active da ação primária."
       },
       "subtle": {
-        "dark": "rgba(212, 251, 0, 0.16)",
-        "light": "rgba(212, 251, 0, 0.12)",
-        "usage": "Badges e fundos suaves."
+        "dark": "rgba(219, 4, 35, 0.18)",
+        "light": "rgba(219, 4, 35, 0.10)",
+        "usage": "Seleção e destaque suave."
       }
     },
     "status": {
       "success": {
         "dark": "#43A85B",
-        "light": "#2E8B57",
+        "light": "#198038",
         "usage": "Sucesso e confirmação."
       },
       "warning": {
         "dark": "#D69B2D",
-        "light": "#B87B14",
+        "light": "#B28600",
         "usage": "Atenção e alerta."
       },
       "danger": {
-        "dark": "#FF5B6E",
-        "light": "#D53F54",
-        "usage": "Erro e destruição."
+        "dark": "#FF4D61",
+        "light": "#DA1E28",
+        "usage": "Erro e ação destrutiva; não confundir com accent de marca."
       },
       "info": {
         "dark": "#6F96FF",
-        "light": "#3768E8",
+        "light": "#0F62FE",
         "usage": "Informação e ajuda."
       }
     },
     "overlay": {
       "default": {
-        "dark": "rgba(0, 0, 0, 0.72)",
-        "light": "rgba(9, 9, 9, 0.42)",
-        "usage": "Modais, drawers e hero overlays."
+        "dark": "rgba(0, 0, 0, 0.64)",
+        "light": "rgba(22, 22, 22, 0.42)",
+        "usage": "Modais e side panels."
       },
       "strong": {
-        "dark": "rgba(0, 0, 0, 0.92)",
-        "light": "rgba(9, 9, 9, 0.56)",
-        "usage": "Overlays críticos e mobile sheets."
+        "dark": "rgba(0, 0, 0, 0.82)",
+        "light": "rgba(22, 22, 22, 0.58)",
+        "usage": "Overlays críticos."
       }
     },
     "focus": {
       "ring": {
-        "dark": "#D4FB00",
-        "light": "#B6D400",
-        "usage": "Estados de foco visíveis."
+        "dark": "#78A9FF",
+        "light": "#0F62FE",
+        "usage": "Foco acessível com referência funcional Carbon; não é cor de marca."
       }
     }
   },
@@ -140,11 +140,11 @@ export const tokens = {
   },
   "radius": {
     "none": 0,
-    "sm": 4,
-    "md": 8,
-    "lg": 16,
-    "xl": 24,
-    "pill": 9999
+    "sm": 2,
+    "md": 4,
+    "lg": 6,
+    "xl": 8,
+    "pill": 999
   },
   "breakpoints": {
     "mobile": 0,
@@ -169,12 +169,12 @@ export const tokens = {
   },
   "shadows": {
     "sm": {
-      "dark": "0 10px 24px rgba(0, 0, 0, 0.18)",
-      "light": "0 10px 24px rgba(0, 0, 0, 0.06)"
+      "dark": "0 1px 2px rgba(0, 0, 0, 0.24)",
+      "light": "0 1px 2px rgba(0, 0, 0, 0.08)"
     },
     "md": {
-      "dark": "0 18px 44px rgba(0, 0, 0, 0.26)",
-      "light": "0 18px 44px rgba(0, 0, 0, 0.10)"
+      "dark": "0 4px 12px rgba(0, 0, 0, 0.30)",
+      "light": "0 4px 12px rgba(0, 0, 0, 0.12)"
     }
   },
   "motion": {
@@ -200,98 +200,109 @@ export const tokens = {
       "mono": "ui-monospace, SFMono-Regular, Consolas, monospace"
     },
     "weights": {
-      "extraLight": 200,
-      "light": 300,
       "regular": 400,
       "medium": 500,
       "semiBold": 600,
-      "bold": 700,
-      "extraBold": 800
+      "bold": 700
     },
     "scale": {
       "display": {
-        "size": 56,
-        "lineHeight": 64,
-        "weight": 800,
-        "letterSpacing": -1,
-        "usage": "Hero editorial, cover e chamadas principais."
-      },
-      "heading-1": {
-        "size": 40,
-        "lineHeight": 48,
-        "weight": 800,
-        "letterSpacing": -0.8,
-        "usage": "Título principal de página."
-      },
-      "heading-2": {
-        "size": 32,
-        "lineHeight": 40,
+        "size": 30,
+        "lineHeight": 36,
         "weight": 700,
         "letterSpacing": -0.4,
-        "usage": "Seções importantes."
+        "usage": "Display compacto de produto e dashboard."
       },
-      "heading-3": {
-        "size": 24,
-        "lineHeight": 32,
+      "heading-1": {
+        "size": 22,
+        "lineHeight": 29,
         "weight": 700,
         "letterSpacing": -0.2,
-        "usage": "Subseções e cards destacados."
+        "usage": "Título principal no admin."
       },
-      "heading-4": {
-        "size": 20,
-        "lineHeight": 28,
+      "heading-2": {
+        "size": 18,
+        "lineHeight": 25,
         "weight": 700,
         "letterSpacing": 0,
-        "usage": "Títulos de card, formulário e listas."
+        "usage": "Seções administrativas."
       },
-      "body-lg": {
-        "size": 18,
-        "lineHeight": 28,
-        "weight": 400,
-        "letterSpacing": 0,
-        "usage": "Texto editorial e conteúdo público."
-      },
-      "body-md": {
+      "heading-3": {
         "size": 16,
-        "lineHeight": 24,
-        "weight": 400,
+        "lineHeight": 22,
+        "weight": 600,
         "letterSpacing": 0,
-        "usage": "Texto padrão de interface."
+        "usage": "Cards, painéis e subseções."
       },
-      "body-sm": {
+      "heading-4": {
         "size": 14,
         "lineHeight": 20,
+        "weight": 600,
+        "letterSpacing": 0,
+        "usage": "Títulos compactos."
+      },
+      "body-lg": {
+        "size": 16,
+        "lineHeight": 22,
+        "weight": 400,
+        "letterSpacing": 0,
+        "usage": "Texto de maior destaque."
+      },
+      "body-md": {
+        "size": 14,
+        "lineHeight": 20,
+        "weight": 400,
+        "letterSpacing": 0,
+        "usage": "Texto padrão do admin."
+      },
+      "body-sm": {
+        "size": 12,
+        "lineHeight": 17,
         "weight": 400,
         "letterSpacing": 0,
         "usage": "Descrição e apoio."
       },
       "label": {
-        "size": 13,
-        "lineHeight": 16,
+        "size": 12,
+        "lineHeight": 17,
         "weight": 600,
-        "letterSpacing": 0.2,
+        "letterSpacing": 0,
         "usage": "Labels, botões e campos."
       },
       "caption": {
-        "size": 12,
-        "lineHeight": 16,
+        "size": 11,
+        "lineHeight": 15,
         "weight": 400,
-        "letterSpacing": 0.2,
-        "usage": "Metadados e rodapés."
+        "letterSpacing": 0.1,
+        "usage": "Metadados."
       },
       "overline": {
         "size": 11,
-        "lineHeight": 14,
+        "lineHeight": 15,
         "weight": 700,
-        "letterSpacing": 1.2,
-        "usage": "Tags e cabeçalhos auxiliares."
+        "letterSpacing": 0.8,
+        "usage": "Cabeçalhos auxiliares."
       },
       "data": {
         "size": 14,
         "lineHeight": 20,
         "weight": 600,
         "letterSpacing": 0,
-        "usage": "Tabelas, métricas e valores numéricos."
+        "usage": "Tabelas, métricas e valores."
+      },
+      "site-display": {
+        "size": 48,
+        "lineHeight": 56,
+        "weight": 700,
+        "letterSpacing": -0.8,
+        "usage": "Somente site público: hero e páginas editoriais."
+      },
+      "site-heading-1": {
+        "size": 36,
+        "lineHeight": 44,
+        "weight": 700,
+        "letterSpacing": -0.5,
+        "usage": "Somente site público: título de página."
       }
     }
   }

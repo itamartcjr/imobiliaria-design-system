@@ -1,44 +1,31 @@
 # Front Inventory
 
-Fonte analisada: `imobiliaria-front`
+Fonte analisada: `imobiliaria-front`.
 
-## Estrutura
+## Papel no design system
 
-- Expo Router com rotas públicas
-- tema central em `src/ui/theme`
-- layout em `src/ui/layout`
-- componentes compartilhados em `src/ui/components`
-- recursos de conteúdo em `src/features`
+O front é referência para **experiências públicas**, não para o admin. Ele pode receber referências de marketplaces e produtos como Airbnb apenas quando isso melhora descoberta e apresentação de imóveis.
 
-## Identidade visual encontrada
+## Padrões úteis para o site público
 
-- páginas mais amplas e respiradas
-- forte presença de imagens
-- uso de cards editoriais e hero blocks
-- navegação pensada para descoberta de imóveis
-- tipografia Karla
-- layout responsivo para web e mobile
+- busca e descoberta;
+- cards de imóvel com imagem e metadados;
+- galerias, favoritos e detalhe do imóvel;
+- páginas institucionais e editoriais;
+- maior respiro e largura de conteúdo;
+- composição responsiva orientada a mídia.
 
-## Padrões recorrentes
+## Tokens observados
 
-- home com seções em sequência
-- cards de imóvel com imagem e metadados
-- páginas institucionais com banners e blocos largos
-- blog com destaque editorial e cards de posts
-- formulários de contato e captação com fundo escuro
+- `background`: `#FFFFFF`;
+- `surface`: `#F7F7F8`;
+- `surfaceDark`: `#252525`;
+- `surfaceDarker`: `#171717`;
+- `primary`: `#DB0423`;
+- spacing: `6, 10, 16, 24, 32, 48, 72`;
+- tipografia atual: Karla;
+- `layout.containerMaxWidth`: `1760`.
 
-## Tokens observados no código local
+## Limite explícito
 
-- `background`: `#FFFFFF`
-- `surface`: `#F7F7F8`
-- `surfaceDark`: `#252525`
-- `surfaceDarker`: `#171717`
-- `primary`: `#DB0423`
-- `spacing`: `6, 10, 16, 24, 32, 48, 72`
-- `typography`: Karla
-- `layout.containerMaxWidth`: `1760`
-
-## Observações
-
-- O front traz boas decisões de composição, especialmente no uso de imagem, respiro e leitura.
-- Ele não define a identidade oficial do sistema, apenas reforça como a linguagem precisa escalar para páginas públicas.
+Referências tipo Airbnb podem influenciar **property search, property card, galeria, favoritos, mapa e property detail** no site público. Elas não devem definir o shell do admin, botões administrativos, radius global, densidade, formulários, tabelas ou paleta principal.

@@ -1,50 +1,42 @@
 # Admin Inventory
 
-Fonte analisada: `imobiliaria-admin`
+Fonte analisada: `imobiliaria-admin`.
+
+## Papel no design system
+
+O admin é a **fonte visual principal** do sistema. Seus tokens e sua densidade não são uma referência secundária: são o ponto de partida para componentes e padrões de produto.
 
 ## Estrutura
 
-- Expo Router com rotas em `app/`
-- tema central em `src/ui/theme`
-- shell adaptativo em `src/ui/layout/adaptive-shell.tsx`
-- componentes compartilhados em `src/ui/components`
-- domínio em `src/features`
-- contratos GraphQL em `src/shared/graphql`
+- Expo Router em `app/`;
+- tema central em `src/ui/theme`;
+- shell adaptativo em `src/ui/layout/adaptive-shell.tsx`;
+- componentes compartilhados em `src/ui/components`;
+- domínio em `src/features`;
+- contratos GraphQL em `src/shared/graphql`.
 
-## Identidade visual encontrada
+## Tokens canônicos observados
 
-- fundo principal escuro
-- superfícies próximas a preto/cinza
-- bordas discretas
-- acento forte e utilitário
-- navegação densa
-- cards contidos
-- botões em formato pill/retangular arredondado
-- tipografia Manrope
+- `background`: `#272727`;
+- `backgroundElevated`: `#2C2C2C`;
+- `backgroundSoft`: `#242424`;
+- `accent`: `#DB0423`;
+- `accentSoft`: `rgba(219, 4, 35, 0.18)`;
+- `accentStrong`: `#FF3854`;
+- `border`: `rgba(255, 255, 255, 0.12)`;
+- `spacing`: `4, 8, 12, 16, 20, 24, 32, 48`;
+- `radius`: `2, 4, 6, 8, 999`;
+- tipografia: Manrope, com corpo administrativo em torno de `14/20` e display compacto em `30/36`.
 
-## Padrões recorrentes
+## Linguagem administrativa
 
-- header com navegação e busca
-- sidebar com navegação principal e secundária
-- listas densas para coleções
-- cards de resumo e ações rápidas
-- campos com destaque visual no foco
-- estados claros de loading, empty e error
+- navegação densa;
+- superfícies discretas e pouca elevação;
+- controles compactos;
+- listas/tabelas como padrão para coleções;
+- cards usados para agrupamento, não como linguagem dominante;
+- feedback de foco, loading, empty e error sempre explícito.
 
-## Tokens observados no código local
+## Relação com Carbon
 
-- `background`: `#272727`
-- `backgroundElevated`: `#2c2c2c`
-- `backgroundSoft`: `#242424`
-- `accent`: `#db0423`
-- `accentStrong`: `#ff3854`
-- `border`: `rgba(255, 255, 255, 0.12)`
-- `spacing`: `4, 8, 12, 16, 20, 24, 32, 48`
-- `radius`: `2, 4, 6, 8, 999`
-- `breakpoints`: mobile, tablet, desktop
-
-## Observações
-
-- O código local usa acento vermelho no tema atual.
-- A especificação do design system oficial pede um acento lima para a identidade da plataforma.
-- A documentação do novo sistema adota o acento lima como token oficial e mantém o vermelho apenas para estados semânticos de perigo.
+Carbon deve melhorar anatomia, hierarquia, estados e previsibilidade dos componentes sem substituir a identidade encontrada acima.
