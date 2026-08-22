@@ -1,0 +1,42 @@
+module.exports = [
+  { slug: "index.html", title: "Imobiliaria Design System", nav: "home", type: "home", description: "Fonte central de tokens, componentes, padrões e documentação.", tags: ["design system", "tokens", "admin", "front"] },
+  { slug: "foundations/principles.html", title: "Principles", nav: "foundations", type: "article", category: "Foundations", description: "Princípios da linguagem visual e da hierarquia de referências." },
+  { slug: "foundations/colors.html", title: "Colors", nav: "foundations", type: "tokens", category: "Foundations", description: "Sistema de cores semântico com dark e light." },
+  { slug: "foundations/typography.html", title: "Typography", nav: "foundations", type: "tokens", category: "Foundations", description: "Escala tipográfica para produto, editorial e dados." },
+  { slug: "foundations/spacing.html", title: "Spacing", nav: "foundations", type: "tokens", category: "Foundations", description: "Cadência de espaços para layout e componentes." },
+  { slug: "foundations/radius.html", title: "Radius", nav: "foundations", type: "tokens", category: "Foundations", description: "Racional de arredondamento para cards, inputs e pills." },
+  { slug: "foundations/grid.html", title: "Grid", nav: "foundations", type: "article", category: "Foundations", description: "Breakpoints, gutters e largura de conteúdo." },
+  { slug: "foundations/motion.html", title: "Motion", nav: "foundations", type: "motion", category: "Foundations", description: "Motion produtiva e expressiva inspirada no Carbon." },
+  { slug: "foundations/dark-light.html", title: "Dark / Light", nav: "foundations", type: "article", category: "Foundations", description: "Duas expressões da mesma identidade visual." },
+
+  { slug: "components/button.html", title: "Button", nav: "components", type: "component", category: "Components", description: "Primary, secondary, ghost e danger com estados e tamanhos." },
+  { slug: "components/input.html", title: "Input", nav: "components", type: "component", category: "Components", description: "Campos de entrada para formulários densos e responsivos." },
+  { slug: "components/search.html", title: "Search", nav: "components", type: "component", category: "Components", description: "Campo de busca simples e offline." },
+  { slug: "components/card.html", title: "Card", nav: "components", type: "component", category: "Components", description: "BaseCard, ClickableCard e ExpandableCard." },
+  { slug: "components/property-card.html", title: "Property Card", nav: "components", type: "property-card", category: "Components", description: "Card imobiliário que equilibra public e admin." },
+  { slug: "components/badge-status.html", title: "Badge / Status", nav: "components", type: "component", category: "Components", description: "Badges, tags e estados semânticos." },
+  { slug: "components/table-datalist.html", title: "Table / Data List", nav: "components", type: "component", category: "Components", description: "Tabela densa para desktop e cards/list items no mobile." },
+  { slug: "components/sidebar-navigation.html", title: "Sidebar / Navigation", nav: "components", type: "component", category: "Components", description: "Sidebar, top navigation e mobile menu." },
+  { slug: "components/modal-sheet.html", title: "Modal / Sheet", nav: "components", type: "component", category: "Components", description: "Overlays e disclosure progressivo." },
+  { slug: "components/toast.html", title: "Toast", nav: "components", type: "component", category: "Components", description: "Feedback não bloqueante." },
+  { slug: "components/skeleton.html", title: "Skeleton", nav: "components", type: "component", category: "Components", description: "Loading states discretos." },
+  { slug: "components/empty-state.html", title: "Empty State", nav: "components", type: "component", category: "Components", description: "Estados vazios claros e orientados à ação." },
+
+  { slug: "patterns/filters.html", title: "Filters", nav: "patterns", type: "pattern", category: "Patterns", description: "FilterBar, chips, panels e sort." },
+  { slug: "patterns/forms.html", title: "Forms", nav: "patterns", type: "pattern", category: "Patterns", description: "Formulários curtos, longos e seccionados." },
+  { slug: "patterns/admin-collection.html", title: "Admin Collection", nav: "patterns", type: "pattern", category: "Patterns", description: "Padrão de coleção para o admin." },
+  { slug: "patterns/property-search.html", title: "Property Search", nav: "patterns", type: "pattern", category: "Patterns", description: "Busca pública de imóveis com composição respirada." },
+  { slug: "patterns/property-detail.html", title: "Property Detail", nav: "patterns", type: "pattern", category: "Patterns", description: "Página de detalhe com imagem, dados e ações." },
+
+  { slug: "guidelines/responsive.html", title: "Responsive", nav: "guidelines", type: "article", category: "Guidelines", description: "Breakpoints e comportamentos por densidade." },
+  { slug: "guidelines/accessibility.html", title: "Accessibility", nav: "guidelines", type: "article", category: "Guidelines", description: "Contraste, foco, teclado e reduced motion." },
+  { slug: "guidelines/writing.html", title: "Writing", nav: "guidelines", type: "article", category: "Guidelines", description: "Tom, microcopy e consistência de texto." },
+  { slug: "guidelines/motion.html", title: "Motion Guidelines", nav: "guidelines", type: "article", category: "Guidelines", description: "Uso produtivo e expressivo do motion." },
+  { slug: "guidelines/dark-light.html", title: "Dark / Light Guidelines", nav: "guidelines", type: "article", category: "Guidelines", description: "Como compartilhar a mesma identidade entre temas." },
+  { slug: "guidelines/admin-vs-public.html", title: "Admin vs Public", nav: "guidelines", type: "article", category: "Guidelines", description: "Mesma identidade, densidades diferentes." },
+
+  { slug: "resources/tokens.html", title: "Tokens", nav: "resources", type: "tokens-page", category: "Resources", description: "Tokens oficiais e como copiá-los." },
+  { slug: "resources/react-native.html", title: "React Native", nav: "resources", type: "article", category: "Resources", description: "Como consumir os tokens em Expo e React Native." },
+  { slug: "resources/css.html", title: "CSS", nav: "resources", type: "article", category: "Resources", description: "Uso dos tokens em CSS e documentação estática." },
+  { slug: "resources/migration.html", title: "Migration", nav: "resources", type: "article", category: "Resources", description: "Passo a passo para migrar admin e front ao sistema." }
+];

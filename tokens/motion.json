@@ -1,0 +1,17 @@
+{
+  "duration": {
+    "instant": 0,
+    "fast": 70,
+    "normal": 160,
+    "slow": 240,
+    "expressive": 320
+  },
+  "easing": {
+    "productiveStandard": "cubic-bezier(0.2, 0, 0.38, 0.9)",
+    "productiveEnter": "cubic-bezier(0, 0, 0.38, 0.9)",
+    "productiveExit": "cubic-bezier(0.2, 0, 1, 0.9)",
+    "expressiveStandard": "cubic-bezier(0.4, 0.14, 0.3, 1)",
+    "expressiveEnter": "cubic-bezier(0, 0, 0.3, 1)",
+    "expressiveExit": "cubic-bezier(0.4, 0.14, 1, 1)"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "fontFamily": {
+    "primary": "Manrope, Inter, system-ui, sans-serif",
+    "mono": "ui-monospace, SFMono-Regular, Consolas, monospace"
+  },
+  "weights": {
+    "extraLight": 200,
+    "light": 300,
+    "regular": 400,
+    "medium": 500,
+    "semiBold": 600,
+    "bold": 700,
+    "extraBold": 800
+  },
+  "scale": {
+    "display": { "size": 56, "lineHeight": 64, "weight": 800, "letterSpacing": -1, "usage": "Hero editorial, cover e chamadas principais." },
+    "heading-1": { "size": 40, "lineHeight": 48, "weight": 800, "letterSpacing": -0.8, "usage": "Título principal de página." },
+    "heading-2": { "size": 32, "lineHeight": 40, "weight": 700, "letterSpacing": -0.4, "usage": "Seções importantes." },
+    "heading-3": { "size": 24, "lineHeight": 32, "weight": 700, "letterSpacing": -0.2, "usage": "Subseções e cards destacados." },
+    "heading-4": { "size": 20, "lineHeight": 28, "weight": 700, "letterSpacing": 0, "usage": "Títulos de card, formulário e listas." },
+    "body-lg": { "size": 18, "lineHeight": 28, "weight": 400, "letterSpacing": 0, "usage": "Texto editorial e conteúdo público." },
+    "body-md": { "size": 16, "lineHeight": 24, "weight": 400, "letterSpacing": 0, "usage": "Texto padrão de interface." },
+    "body-sm": { "size": 14, "lineHeight": 20, "weight": 400, "letterSpacing": 0, "usage": "Descrição e apoio." },
+    "label": { "size": 13, "lineHeight": 16, "weight": 600, "letterSpacing": 0.2, "usage": "Labels, botões e campos." },
+    "caption": { "size": 12, "lineHeight": 16, "weight": 400, "letterSpacing": 0.2, "usage": "Metadados e rodapés." },
+    "overline": { "size": 11, "lineHeight": 14, "weight": 700, "letterSpacing": 1.2, "usage": "Tags e cabeçalhos auxiliares." },
+    "data": { "size": 14, "lineHeight": 20, "weight": 600, "letterSpacing": 0, "usage": "Tabelas, métricas e valores numéricos." }
+  }
+}

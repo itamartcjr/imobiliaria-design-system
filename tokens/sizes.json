@@ -1,0 +1,15 @@
+{
+  "container": {
+    "narrow": 720,
+    "default": 1120,
+    "wide": 1440,
+    "display": 1760
+  },
+  "touchTarget": 44,
+  "icon": {
+    "sm": 16,
+    "md": 20,
+    "lg": 24,
+    "xl": 32
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "imobiliaria-design-system",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "clean": "node scripts/clean.js",
+    "build:tokens": "node scripts/build-tokens.js",
+    "build": "npm run clean && npm run build:tokens && node scripts/build-site.js",
+    "validate": "node scripts/validate-links.js",
+    "dev": "node scripts/dev-server.js"
+  }
+}
