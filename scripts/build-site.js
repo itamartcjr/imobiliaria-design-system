@@ -20,7 +20,9 @@ for (const [slug, page] of Object.entries(pageData)) {
   writeFile(filePath, content);
 }
 
-fs.copyFileSync(path.join(root, "src", "assets", "js", "app.js"), path.join(assetsJsDir, "app.js"));
+for (const jsFile of fs.readdirSync(path.join(root, "src", "assets", "js")).filter((file) => file.endsWith(".js"))) {
+  fs.copyFileSync(path.join(root, "src", "assets", "js", jsFile), path.join(assetsJsDir, jsFile));
+}
 writeFile(path.join(dist, "_redirects"), "");
 writeFile(path.join(assetsJsDir, "search-index.js"), `window.DESIGN_SYSTEM_SEARCH_INDEX = ${JSON.stringify(Object.entries(pageData).map(([href, page]) => ({
   title: page.title,

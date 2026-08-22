@@ -68,4 +68,8 @@
       }
     });
   });
+
+  const specimenScript = document.createElement("script");
+  specimenScript.src = `${docRoot}assets/js/specimens.js`;
+  document.body.appendChild(specimenScript);
 })();
