@@ -1,0 +1,16 @@
+const componentCoreDefs = [
+  {slug:"components/button.html",title:"Button",kind:"button",description:"Ação explícita com hierarquia primary, secondary, ghost e danger.",variants:["Primary","Secondary","Ghost","Danger"],sizes:["32px compact","40px default","44px touch"],anatomy:["Container","Label","Optional leading icon","Focus ring"]},
+  {slug:"components/icon-button.html",title:"Icon Button",kind:"icon",description:"Ação compacta por ícone quando o significado é reconhecível e existe accessible name.",variants:["Default","Ghost","Danger"],sizes:["40px","44px touch"],anatomy:["Hit area","Icon","Tooltip","Accessible label"]},
+  {slug:"components/button-group.html",title:"Button Group",kind:"button",description:"Agrupa ações relacionadas sem competir com a ação primária da tela.",variants:["Inline","Toolbar","Segmented only when mutually exclusive"],sizes:["Compact","Default"]},
+  {slug:"components/link.html",title:"Link",kind:"content",description:"Navegação textual distinta de buttons; underline/focus deixam a affordance clara.",variants:["Inline","Standalone","Visited when useful"],sizes:["Body sm","Body md"]},
+  {slug:"components/badge.html",title:"Badge",kind:"content",description:"Sinal semântico compacto para status; pill é apropriado neste componente.",variants:["Neutral","Accent","Success","Warning","Danger"],sizes:["24px","28px"],states:["Default","Selected when interactive","Disabled when interactive"]},
+  {slug:"components/tag.html",title:"Tag",kind:"content",description:"Metadata, categoria ou filtro aplicado; não substitui status quando semântica é importante.",variants:["Read-only","Removable","Selectable"],sizes:["24px","28px"]},
+  {slug:"components/tooltip.html",title:"Tooltip",kind:"overlay",description:"Explica ícones e controles breves sem carregar informação essencial apenas no hover.",variants:["Top","Right","Bottom","Left"],sizes:["Content hug"],states:["Hidden","Open","Keyboard open"]},
+  {slug:"components/divider.html",title:"Divider",kind:"content",description:"Separação estrutural de baixa ênfase para listas, menus e painéis densos.",variants:["Horizontal","Vertical"],sizes:["1px"]},
+  {slug:"components/avatar.html",title:"Avatar",kind:"content",description:"Representação compacta de corretor, cliente ou usuário com fallback de iniciais.",variants:["Image","Initials","Fallback icon"],sizes:["24","32","40"]},
+  {slug:"components/card.html",title:"Card",kind:"content",description:"Agrupa informação relacionada; no admin não substitui data table/lista sem necessidade.",variants:["Base","Selectable","Expandable"],sizes:["Content driven"]},
+  {slug:"components/media.html",title:"Media",kind:"content",description:"Wrapper para imagem, vídeo ou placeholder com ratio previsível e fallback.",variants:["Image","Video","Placeholder"],sizes:["1:1","4:3","16:9"]},
+  {slug:"components/image.html",title:"Image",kind:"content",description:"Imagem com sizing, crop, loading e alt definidos pelo contexto.",variants:["Cover","Contain","Responsive"],sizes:["Tokenized ratios"]},
+];
+
+module.exports = { componentCoreDefs };

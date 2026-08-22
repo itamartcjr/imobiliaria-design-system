@@ -1,81 +1,89 @@
-const { codeBlock, callout, doDont, hero, pageArticle, previewDevice, previewDeviceRow, section, simpleCards, tokenTable, brandSwatches } = require("./site-renderers");
+const { codeBlock, callout, doDont, hero, previewDevice, previewDeviceRow, section, simpleCards, tokenTable, brandSwatches, escapeHtml } = require("./site-renderers");
 
-const groups = [
-  ["Getting started", "home", [["Home", "index.html"]]],
-  ["Foundations", "foundations", [["Principles","foundations/principles.html"],["Colors","foundations/colors.html"],["Typography","foundations/typography.html"],["Spacing","foundations/spacing.html"],["Radius","foundations/radius.html"],["Grid","foundations/grid.html"],["Motion","foundations/motion.html"],["Dark / Light","foundations/dark-light.html"]]],
-  ["Components", "components", [["Button","components/button.html"],["Input","components/input.html"],["Search","components/search.html"],["Card","components/card.html"],["Property Card","components/property-card.html"],["Badge / Status","components/badge-status.html"],["Table / Data List","components/table-datalist.html"],["Sidebar / Navigation","components/sidebar-navigation.html"],["Modal / Sheet","components/modal-sheet.html"],["Toast","components/toast.html"],["Skeleton","components/skeleton.html"],["Empty State","components/empty-state.html"]]],
-  ["Patterns", "patterns", [["Filters","patterns/filters.html"],["Forms","patterns/forms.html"],["Admin Collection","patterns/admin-collection.html"],["Property Search","patterns/property-search.html"],["Property Detail","patterns/property-detail.html"]]],
-  ["Guidelines", "guidelines", [["Responsive","guidelines/responsive.html"],["Accessibility","guidelines/accessibility.html"],["Writing","guidelines/writing.html"],["Motion","guidelines/motion.html"],["Dark / Light","guidelines/dark-light.html"],["Admin vs Public","guidelines/admin-vs-public.html"]]],
-  ["Resources", "resources", [["Tokens","resources/tokens.html"],["React Native","resources/react-native.html"],["CSS","resources/css.html"],["Migration","resources/migration.html"]]],
-];
-const nav = groups.map(([title,key,items]) => ({ title, items: items.map(([label,href]) => ({ key, label, href })) }));
+const { sources } = require("./catalog/sources");
+const { groups } = require("./catalog/navigation");
+const { componentDefs, realEstateDefs, patternDefs } = require("./catalog/definitions");
+const { registerStaticPages } = require("./catalog/static-pages");
 
-function makePage(title, category, navKey, description, body = [], extra = "") {
-  return { title, category, nav: navKey, type: category, description, hero: hero({ title, category, description }, extra), body: body.join("") };
-}
+const nav = groups.map(([title, items]) => ({ title, items: items.map(([label, href]) => ({ key: href, label, href })) }));
 const pageData = {};
-function add(slug, ...args) { pageData[slug] = makePage(...args); }
 
-add("index.html", "Imobiliaria Design System", "Getting started", "home",
-  "Sistema admin-first: identidade do imobiliaria-admin, arquitetura de interação Carbon e referências de marketplace restritas ao site público.",
-  [section("Direção do sistema", "Decision", simpleCards([
-    { html: "<h3>1 · Admin</h3><p>Paleta, Manrope, densidade, radius e linguagem visual partem do produto existente.</p>" },
-    { html: "<h3>2 · Carbon</h3><p>Controles, tabelas, side navigation, estados, foco, overlays e motion produtivo.</p>" },
-    { html: "<h3>3 · Public</h3><p>Airbnb e outras referências entram apenas em descoberta, cards, galeria e detalhe de imóvel.</p>" },
-  ])), section("Tokens principais", "Admin source of truth", `${brandSwatches()}<div class="pill-row" style="margin-top:16px"><span class="pill">Manrope</span><span class="pill">Red accent</span><span class="pill">2–8px radius</span><span class="pill">14/20 body</span></div>`)],
-  callout("Hierarquia oficial", "Admin define identidade. Carbon define a mecânica do admin. Front/Airbnb ficam na experiência pública."));
+function makePage(slug, title, category, description, body = [], extra = "", tags = []) {
+  return { title, category, nav: slug, type: category, description, hero: hero({ title, category, description }, extra), body: body.join(""), tags };
+}
+function add(slug, title, category, description, body = [], extra = "", tags = []) { pageData[slug] = makePage(slug, title, category, description, body, extra, tags); }
+function list(items) { return `<ul class="checklist">${items.map((item) => `<li>${item}</li>`).join("")}</ul>`; }
+function chips(items) { return `<div class="pill-row">${items.map((item) => `<span class="pill">${escapeHtml(item)}</span>`).join("")}</div>`; }
+function specGrid(items) { return `<div class="spec-grid">${items.map((item) => `<article class="spec-item"><span>${escapeHtml(item.label)}</span><strong>${escapeHtml(item.value)}</strong><p>${escapeHtml(item.note || "")}</p></article>`).join("")}</div>`; }
+function externalLinks(items) { return `<div class="reference-list">${items.map(([label, href]) => `<a class="reference-link" href="${href}" target="_blank" rel="noreferrer"><span>${escapeHtml(label)}</span><small>${escapeHtml(href.replace(/^https?:\/\//, ""))}</small></a>`).join("")}</div>`; }
+function stateMatrix(states) { return `<div class="state-matrix">${states.map((state) => `<div class="state-cell"><span class="state-dot state-dot--${String(state).toLowerCase().replace(/[^a-z]+/g,"-")}"></span><strong>${escapeHtml(state)}</strong><small>Documentado e testável</small></div>`).join("")}</div>`; }
+function sectionNav(items) { return `<nav class="on-this-page" aria-label="Nesta página"><strong>Nesta página</strong>${items.map((item) => `<a href="#${item.id}">${escapeHtml(item.label)}</a>`).join("")}</nav>`; }
 
-add("foundations/principles.html", "Principles", "Foundations", "foundations", "Identidade administrativa própria, comportamento previsível inspirado em Carbon e isolamento claro da linguagem pública.", [section("Hierarquia de referências", "Decision", doDont("<p><strong>Admin →</strong> marca, contraste, densidade, tipografia e radius.</p><p><strong>Carbon →</strong> anatomia, estados, foco, tabelas, navegação e motion.</p><p><strong>Public →</strong> imagem, descoberta, galeria e composição editorial.</p>", "<p>Não transformar o admin em Airbnb. Não importar a identidade IBM. Não criar uma terceira linguagem visual.</p>"))]);
+const defaultStates = ["Default", "Hover", "Focus", "Active", "Disabled"];
+const defaultTests = [
+  "Texto curto e texto longo sem quebrar hierarquia.", "Conteúdo ausente sem gerar buracos ou controles órfãos.",
+  "Keyboard focus visível e ordem de tabulação previsível.", "Dark e light com contraste adequado.",
+  "320px, 768px, 1200px e 1440px sem overflow inesperado.", "Estados loading, error e disabled quando aplicáveis.",
+];
 
-add("foundations/colors.html", "Colors", "Foundations", "foundations", "A paleta principal volta aos valores do imobiliaria-admin; o light é neutro e funcional.", [
-  section("Color tokens", "Admin first", tokenTable([
-    { token:"background.canvas", dark:"#272727", light:"#F4F4F4", usage:"Canvas principal." }, { token:"background.surface", dark:"#2C2C2C", light:"#FFFFFF", usage:"Superfície base." },
-    { token:"text.primary", dark:"#FFFFFF", light:"#161616", usage:"Texto principal." }, { token:"border.default", dark:"rgba(255,255,255,.12)", light:"#C6C6C6", usage:"Borda padrão." },
-    { token:"accent.primary", dark:"#DB0423", light:"#DB0423", usage:"Marca e ação primária." }, { token:"focus.ring", dark:"#78A9FF", light:"#0F62FE", usage:"Foco acessível; referência funcional Carbon." },
-    { token:"status.danger", dark:"#FF4D61", light:"#DA1E28", usage:"Erro e destruição; separado da marca." },
-  ])), section("Accent usage", "Rule", doDont("<p>Vermelho no CTA principal; foco azul somente como sinal de acessibilidade/interação.</p>", "<p>Não usar lime. Não confundir accent com danger.</p>"))
-]);
+function componentPreview(kind, title, context) {
+  if (kind === "button") return `<div class="component-stage"><div class="button-samples"><button class="primary-button">Primary</button><button class="secondary-button">Secondary</button><button class="ghost-button">Ghost</button><button class="danger-button">Danger</button></div></div>`;
+  if (kind === "icon") return `<div class="component-stage"><div class="icon-samples"><button class="icon-button" aria-label="Adicionar">＋</button><button class="icon-button" aria-label="Editar">✎</button><button class="icon-button" aria-label="Mais ações">•••</button></div></div>`;
+  if (kind === "field") return `<div class="component-stage"><label class="field"><span>${escapeHtml(title)}</span><input placeholder="Digite um valor" /></label><p class="helper-text">Helper text e validação ficam associados ao campo.</p></div>`;
+  if (kind === "textarea") return `<div class="component-stage"><label class="field"><span>Descrição</span><textarea placeholder="Descreva o imóvel"></textarea></label></div>`;
+  if (kind === "choice") return `<div class="component-stage choice-stack"><label class="choice"><input type="checkbox" checked><span>Selecionado</span></label><label class="choice"><input type="checkbox"><span>Não selecionado</span></label><label class="choice"><input type="checkbox" disabled><span>Disabled</span></label></div>`;
+  if (kind === "select") return `<div class="component-stage"><label class="field"><span>${escapeHtml(title)}</span><select><option>Selecione</option><option>Apartamento</option><option>Casa</option></select></label></div>`;
+  if (kind === "nav") return `<div class="component-stage"><div class="mini-nav"><a class="is-active">Visão geral</a><a>Detalhes</a><a>Histórico</a><a>Documentos</a></div></div>`;
+  if (kind === "menu") return `<div class="component-stage"><div class="menu-demo"><button class="menu-item">Editar</button><button class="menu-item">Duplicar</button><button class="menu-item">Arquivar</button><button class="menu-item menu-item--danger">Excluir</button></div></div>`;
+  if (kind === "overlay") return `<div class="component-stage"><div class="overlay-demo"><div class="overlay-demo__surface"><p class="eyebrow">${escapeHtml(title)}</p><h3>Confirme a ação</h3><p>Conteúdo curto, ação principal e saída clara.</p><div class="button-samples"><button class="primary-button">Confirmar</button><button class="secondary-button">Cancelar</button></div></div></div></div>`;
+  if (kind === "feedback") return `<div class="component-stage"><div class="toast-stack"><div class="toast toast--success"><strong>Sucesso</strong><p>A alteração foi salva.</p></div><div class="toast toast--info"><strong>Informação</strong><p>Há dados para revisar.</p></div><div class="toast toast--danger"><strong>Erro</strong><p>Não foi possível concluir.</p></div></div></div>`;
+  if (kind === "loading") return `<div class="component-stage"><div class="skeleton-card"><div class="skeleton skeleton--hero"></div><div class="skeleton skeleton--line"></div><div class="skeleton skeleton--line short"></div></div></div>`;
+  if (kind === "data") return `<div class="component-stage"><div class="table-wrap"><table class="data-table"><thead><tr><th>Código</th><th>Imóvel</th><th>Status</th><th>Valor</th></tr></thead><tbody><tr><td>AP-001</td><td>Apartamento Moema</td><td><span class="badge badge--accent">Ativo</span></td><td>R$ 1.250.000</td></tr><tr><td>CA-204</td><td>Casa Jardins</td><td><span class="badge badge--warning">Revisão</span></td><td>R$ 2.900.000</td></tr></tbody></table></div></div>`;
+  if (kind === "progress") return `<div class="component-stage"><div class="progress-demo"><div class="progress-demo__bar"><span style="width:68%"></span></div><small>68% concluído</small></div></div>`;
+  if (kind === "content") return `<div class="component-stage"><article class="card-demo"><p class="eyebrow">${escapeHtml(context)}</p><h3>${escapeHtml(title)}</h3><p>Conteúdo principal, metadata e ações alinhadas à densidade do produto.</p></article></div>`;
+  if (kind === "public-property") return `<div class="component-stage component-stage--public"><article class="property-preview"><div class="property-preview__media"><span class="property-preview__badge">Destaque</span><button class="property-preview__favorite" aria-label="Favoritar">♡</button></div><div class="property-preview__body"><strong>R$ 1.250.000</strong><span>Apartamento · Moema</span><small>2 quartos · 2 vagas · 92 m²</small></div></article></div>`;
+  if (kind === "metric") return `<div class="component-stage"><div class="metric-grid"><article class="metric-card"><span>Leads novos</span><strong>28</strong><small>+12% esta semana</small></article><article class="metric-card"><span>Imóveis ativos</span><strong>164</strong><small>7 em revisão</small></article></div></div>`;
+  return `<div class="component-stage"><article class="card-demo"><p class="eyebrow">${escapeHtml(context)}</p><h3>${escapeHtml(title)}</h3><p>Specimen HTML documentado no catálogo.</p></article></div>`;
+}
 
-add("foundations/typography.html", "Typography", "Foundations", "foundations", "Manrope e escala compacta do admin como padrão; tamanhos editoriais ficam separados para o site público.", [section("Product scale", "Admin", simpleCards([
-  { html:"<p class='type-demo type-demo--display'>Display</p><p>30 / 36 · bold</p>" }, { html:"<p class='type-demo type-demo--h1'>Heading 1</p><p>22 / 29 · bold</p>" },
-  { html:"<p class='type-demo type-demo--h2'>Heading 2</p><p>18 / 25 · bold</p>" }, { html:"<p class='type-demo type-demo--body'>Body md</p><p>14 / 20 · regular</p>" },
-])), section("Public scale", "Isolated", "<p><code>site-display</code> e <code>site-heading-1</code> existem somente para páginas públicas.</p>")]);
+function componentDoc(def) {
+  const context = def.context || "Admin";
+  const states = def.states || defaultStates;
+  const anatomy = def.anatomy || ["Container", "Label / content", "Interactive state", "Optional helper / action"];
+  const variants = def.variants || ["Default", "Compact", "With icon / metadata"];
+  const sizes = def.sizes || ["sm", "md", "lg"];
+  const behavior = def.behavior || ["Mantém feedback imediato para hover, pressed e focus.", "Não muda layout de forma inesperada durante interação.", "Usa progressive disclosure quando há ações secundárias."];
+  const a11y = def.a11y || ["Nome acessível claro.", "Focus ring azul independente da cor de marca.", "Não depender apenas de cor para comunicar estado.", "Área interativa mínima de 44px quando o controle é touch."];
+  const tests = def.tests || defaultTests;
+  const navItems = [{id:"overview",label:"Overview"},{id:"preview",label:"Preview"},{id:"anatomy",label:"Anatomy"},{id:"variants-sizes",label:"Variants & sizes"},{id:"states",label:"States"},{id:"behavior",label:"Behavior"},{id:"accessibility",label:"Accessibility"},{id:"testing",label:"Testing"},{id:"do-dont",label:"Do / Don't"}];
+  add(def.slug, def.title, def.category || "Components", def.description, [
+    section("Overview", "Usage", `${sectionNav(navItems)}<div class="doc-summary"><span class="context-badge context-badge--${context.toLowerCase().replace(/[^a-z]+/g,"-")}">${escapeHtml(context)}</span><p>${escapeHtml(def.description)}</p></div>`, "", "overview"),
+    section("Live preview", "HTML specimen", componentPreview(def.kind, def.title, context), "", "preview"),
+    section("Anatomy", "Structure", simpleCards(anatomy.map((item, index) => ({ html:`<span class="anatomy-index">${index + 1}</span><h3>${escapeHtml(item)}</h3><p>Responsabilidade explícita na composição do componente.</p>` }))), "", "anatomy"),
+    section("Variants & sizes", "API surface", `${specGrid([{label:"Variants",value:variants.join(" · "),note:"Somente variantes com necessidade real."},{label:"Sizes",value:sizes.join(" · "),note:"Escala compacta do admin por padrão."},{label:"Context",value:context,note: context.toLowerCase().includes("public") ? "Marketplace permitido neste contexto." : "Admin-first; Carbon orienta interação."}])}`, "", "variants-sizes"),
+    section("States", "Interaction", stateMatrix(states), "", "states"),
+    section("Behavior", "Carbon-informed", list(behavior), "", "behavior"),
+    section("Accessibility", "Required", list(a11y), "", "accessibility"),
+    section("Testing", "Episode 4 discipline", list(tests), "", "testing"),
+    section("Do / Don't", "Guidance", doDont(`<p>${escapeHtml(def.do || "Use o componente quando ele representar claramente esta função no produto.")}</p>`, `<p>${escapeHtml(def.dont || "Não use apenas por aparência nem misture linguagem pública dentro do admin.")}</p>`), "", "do-dont"),
+  ], callout("Definition of done", "O componente só é considerado pronto quando anatomy, estados, acessibilidade, conteúdo extremo e responsividade estiverem documentados."), [def.title, def.kind, context, "component", "states", "accessibility"]);
+}
 
-add("foundations/spacing.html", "Spacing", "Foundations", "foundations", "Escala compacta de 4px alinhada ao admin e adequada a interfaces de dados.", [section("Space scale", "Tokens", tokenTable([{token:"space.1",dark:"4",light:"4",usage:"Micro gap."},{token:"space.2",dark:"8",light:"8",usage:"Ícone/texto."},{token:"space.3",dark:"12",light:"12",usage:"Controles densos."},{token:"space.4",dark:"16",light:"16",usage:"Padding padrão."},{token:"space.6",dark:"24",light:"24",usage:"Seções."},{token:"space.9",dark:"48",light:"48",usage:"Grandes separações."}]))]);
-add("foundations/radius.html", "Radius", "Foundations", "foundations", "Geometria contida: 2, 4, 6 e 8px como no admin; pill é exceção.", [section("Radius scale", "Admin tokens", tokenTable([{token:"radius.none",dark:"0",light:"0",usage:"Tabelas/divisores."},{token:"radius.sm",dark:"2",light:"2",usage:"Navegação."},{token:"radius.md",dark:"4",light:"4",usage:"Inputs/botões."},{token:"radius.lg",dark:"6",light:"6",usage:"Cards/painéis."},{token:"radius.xl",dark:"8",light:"8",usage:"Overlays."},{token:"radius.pill",dark:"999",light:"999",usage:"Tags e badges; não é padrão de botão."}]))]);
-add("foundations/grid.html", "Grid", "Foundations", "foundations", "Breakpoints compartilhados; admin prioriza produtividade e public prioriza mídia.", [section("Breakpoints", "Layout", tokenTable([{token:"mobile",dark:"0",light:"0",usage:"Até 767px."},{token:"tablet",dark:"768",light:"768",usage:"Tablet."},{token:"desktop",dark:"1200",light:"1200",usage:"Desktop produtivo."},{token:"largeDesktop",dark:"1440",light:"1440",usage:"Coleções e mídia ampla."}]))]);
-add("foundations/motion.html", "Motion", "Foundations", "foundations", "Motion produtivo de Carbon é o padrão no admin; expressivo fica para casos públicos específicos.", [section("Productive motion", "Carbon", tokenTable([{token:"duration.fast",dark:"70ms",light:"70ms",usage:"Hover/pressed."},{token:"duration.normal",dark:"160ms",light:"160ms",usage:"Menus/feedback."},{token:"duration.slow",dark:"240ms",light:"240ms",usage:"Painéis/modal."}]))]);
-add("foundations/dark-light.html", "Dark / Light", "Foundations", "foundations", "Dark preserva a identidade do admin; light é derivação neutra, não uma linguagem Airbnb.", [section("Theme matrix", "Rule", previewDeviceRow([previewDevice("Admin dark","mobile","<div class='theme-demo theme-demo--dark'><strong>#272727</strong><p>Expressão principal.</p></div>"),previewDevice("Neutral light","mobile","<div class='theme-demo theme-demo--light'><strong>#F4F4F4</strong><p>Derivação funcional.</p></div>")]))]);
+function patternDoc(def) {
+  add(def.slug, def.title, "Patterns", def.description, [
+    section("Intent", "When to use", `<p>${escapeHtml(def.description)}</p>${chips(def.contexts || ["Desktop admin", "Responsive", "Keyboard"] )}`),
+    section("Structure", "Composition", simpleCards((def.structure || ["Header / context", "Primary content", "Actions / state", "Feedback"]).map((item, index) => ({ html:`<span class="anatomy-index">${index+1}</span><h3>${escapeHtml(item)}</h3><p>Responsabilidade definida dentro do fluxo.</p>` })))),
+    section("Sequence", "Behavior", list(def.sequence || ["Entrar com contexto e objetivo claros.", "Mostrar ação primária sem esconder ações essenciais.", "Persistir estado relevante ao navegar.", "Confirmar resultado ou erro no mesmo contexto."])),
+    section("Responsive", "Adaptation", list(def.responsive || ["Preservar prioridade de ações em telas estreitas.", "Converter painel lateral em drawer/sheet quando necessário.", "Evitar tabelas ilegíveis: usar prioridades ou data list no mobile."])),
+    section("Edge cases", "Resilience", list(def.edge || ["Empty", "Loading", "Error", "Permission denied", "Long content", "Offline / retry quando aplicável"])),
+    section("Testing", "Definition of done", list(defaultTests)),
+    section("Do / Don't", "Boundary", doDont(`<p>${escapeHtml(def.do || "Use o padrão para manter fluxos semelhantes consistentes.")}</p>`, `<p>${escapeHtml(def.dont || "Não invente uma estrutura nova quando este padrão já resolve o fluxo.")}</p>`)),
+  ], callout("Pattern rule", def.public ? "Este padrão é público: referências de marketplace são permitidas sem alterar os componentes administrativos." : "Padrão administrativo: identidade do admin, comportamento inspirado em Carbon."), [def.title, "pattern", def.public ? "public" : "admin"]);
+}
 
-add("components/button.html", "Button", "Components", "components", "Botões compactos e pouco arredondados, com vermelho apenas na ação primária.", [section("Variants", "Carbon-like anatomy", "<div class='button-samples'><button class='primary-button'>Primary</button><button class='secondary-button'>Secondary</button><button class='ghost-button'>Ghost</button><button class='danger-button'>Danger</button></div>")]);
-add("components/input.html", "Input", "Components", "components", "Inputs compactos, labels claras, borda discreta e foco visível.", [section("Preview", "States", "<div class='form-grid'><label class='field'><span>Nome</span><input placeholder='Nome do imóvel'></label><label class='field'><span>Busca</span><input type='search' placeholder='Código, bairro ou proprietário'></label></div>")]);
-add("components/search.html", "Search", "Components", "components", "Busca de produto compacta no admin; busca pública pode ser mais expressiva.", [section("Admin search", "Product", "<div class='search-demo'><input type='search' placeholder='Buscar em coleções' data-doc-search><div class='search-results' data-search-results-demo></div></div>")]);
-add("components/card.html", "Card", "Components", "components", "Cards agrupam informação; não substituem tabelas e listas como padrão administrativo.", [section("Family", "Product", simpleCards([{html:"<h3>Base</h3><p>Surface e borda discreta.</p>"},{html:"<h3>Selectable</h3><p>Estado explícito.</p>"},{html:"<h3>Expandable</h3><p>Progressive disclosure.</p>"}]))]);
-add("components/property-card.html", "Property Card", "Components", "components", "Componente prioritariamente público; aqui referências de marketplace/Airbnb são permitidas.", [section("Boundary", "Site only", doDont("<p>Imagem, favorito, galeria e leitura rápida no public.</p>","<p>Não levar essa linguagem para CRM, cadastros e coleções do admin.</p>"))]);
-add("components/badge-status.html", "Badge / Status", "Components", "components", "Badges compactos e semânticos; pill é apropriado aqui.", [section("States", "Semantic", "<div class='pill-row'><span class='badge badge--accent'>Ativo</span><span class='badge badge--success'>Concluído</span><span class='badge badge--warning'>Pendente</span><span class='badge badge--danger'>Perdido</span></div>")]);
-add("components/table-datalist.html", "Table / Data List", "Components", "components", "Data table é componente central do admin, com densidade e comportamento inspirados em Carbon.", [section("Desktop", "Admin core", "<div class='table-wrap'><table class='data-table'><thead><tr><th>Código</th><th>Imóvel</th><th>Bairro</th><th>Valor</th></tr></thead><tbody><tr><td>AP-001</td><td>Apartamento</td><td>Moema</td><td>R$ 1.250.000</td></tr></tbody></table></div>")]);
-add("components/sidebar-navigation.html", "Sidebar / Navigation", "Components", "components", "Side navigation administrativa com densidade, seleção e hierarquia próximas de Carbon.", [section("Shell", "Admin core", "<div class='shell-preview'><aside class='shell-preview__sidebar'><a class='shell-preview__item is-active'>Dashboard</a><a class='shell-preview__item'>Imóveis</a><a class='shell-preview__item'>Leads</a></aside><div class='shell-preview__content'><div class='shell-preview__panel'></div></div></div>")]);
-add("components/modal-sheet.html", "Modal / Sheet", "Components", "components", "Progressive disclosure com modal e side panel; radius e motion contidos.");
-add("components/toast.html", "Toast", "Components", "components", "Feedback não bloqueante e semântico.");
-add("components/skeleton.html", "Skeleton", "Components", "components", "Loading discreto para preservar contexto e estrutura.");
-add("components/empty-state.html", "Empty State", "Components", "components", "Estado vazio objetivo, com próximo passo explícito.");
-
-add("patterns/filters.html", "Filters", "Patterns", "patterns", "Toolbar e filtros produtivos no admin; chips apenas para filtros aplicados.");
-add("patterns/forms.html", "Forms", "Patterns", "patterns", "Formulários administrativos seguem labels, seções, validação e progressive disclosure previsíveis.");
-add("patterns/admin-collection.html", "Admin Collection", "Patterns", "patterns", "Padrão central do produto: toolbar, filtros, tabela/lista, paginação e ações.");
-add("patterns/property-search.html", "Property Search", "Patterns", "patterns", "Padrão público de descoberta; aqui podem entrar referências como Airbnb sem alterar o admin.", [section("Public", "Marketplace boundary", "<p>Imagem, localização, filtros, favoritos e mapa pertencem ao contexto público.</p>")]);
-add("patterns/property-detail.html", "Property Detail", "Patterns", "patterns", "Detalhe público orientado a galeria, atributos, valor, localização e contato.");
-
-add("guidelines/responsive.html", "Responsive", "Guidelines", "guidelines", "Admin adapta densidade e navegação; public adapta composição e mídia.");
-add("guidelines/accessibility.html", "Accessibility", "Guidelines", "guidelines", "Contraste, keyboard, foco e estados são requisitos do sistema, com Carbon como referência funcional.", [section("Checklist", "A11y", "<ul class='checklist'><li>Foco visível.</li><li>Labels e erros associados.</li><li>Sem dependência exclusiva de cor.</li><li>Reduced motion.</li></ul>")]);
-add("guidelines/writing.html", "Writing", "Guidelines", "guidelines", "Texto administrativo direto e operacional; texto público pode ser mais editorial.");
-add("guidelines/motion.html", "Motion", "Guidelines", "guidelines", "Productive motion por padrão no admin; expressive motion somente quando conteúdo público justificar.");
-add("guidelines/dark-light.html", "Dark / Light", "Guidelines", "guidelines", "Tema muda superfície e contraste; não muda a hierarquia de referências.", [section("Rules", "Theme", doDont("<p>Dark mantém #272727 e vermelho do admin. Light é neutro.</p>","<p>Light não é Airbnb e dark não é dashboard sci-fi.</p>"))]);
-add("guidelines/admin-vs-public.html", "Admin vs Public", "Guidelines", "guidelines", "Separação explícita evita que referências do site dominem o produto administrativo.", [section("Comparison", "Boundary", "<div class='comparison-grid'><div class='comparison-card'><h3>Admin</h3><p><strong>Fonte:</strong> imobiliaria-admin + Carbon.</p><p>Denso, produtivo, flat, radius 2–8.</p></div><div class='comparison-card comparison-card--public'><h3>Public</h3><p><strong>Fonte:</strong> imobiliaria-front + referências de marketplace/Airbnb.</p><p>Imagem, galeria, favoritos e descoberta.</p></div></div>")]);
-
-add("resources/tokens.html", "Tokens", "Resources", "resources", "Tokens oficiais alinhados ao admin, com extensões funcionais Carbon e tokens públicos isolados.", [section("Core", "Reference", tokenTable([{token:"--background-canvas",dark:"#272727",light:"#F4F4F4",usage:"Canvas."},{token:"--accent-primary",dark:"#DB0423",light:"#DB0423",usage:"Ação primária."},{token:"--focus-ring",dark:"#78A9FF",light:"#0F62FE",usage:"Foco."}])),section("Quick reference", "Admin", codeBlock("body-md = 14/20\nradius.md = 4px\nradius.lg = 6px\ntouch target = 44px", "Admin tokens"))]);
-add("resources/react-native.html", "React Native", "Resources", "resources", "Consumo dos tokens no admin Expo/React Native.");
-add("resources/css.html", "CSS", "Resources", "resources", "Consumo dos tokens em web e documentação.");
-add("resources/migration.html", "Migration", "Resources", "resources", "Migrar preservando primeiro a identidade do admin e depois padronizando interação com Carbon.");
+registerStaticPages({ add, section, simpleCards, specGrid, brandSwatches, chips, doDont, callout, tokenTable, list, externalLinks, sources, previewDevice, previewDeviceRow, codeBlock });
+componentDefs.forEach(componentDoc);
+realEstateDefs.forEach((def) => componentDoc({ ...def, category: "Real estate" }));
+patternDefs.forEach(patternDoc);
 
 module.exports = { nav, pageData };

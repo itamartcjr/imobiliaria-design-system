@@ -1,0 +1,17 @@
+const componentNavigationDefs = [
+  {slug:"components/breadcrumb.html",title:"Breadcrumb",kind:"nav",description:"Contexto hierárquico para páginas profundas; não substitui back navigation.",variants:["Default","Collapsed"],sizes:["32px"]},
+  {slug:"components/tabs.html",title:"Tabs",kind:"nav",description:"Alterna vistas relacionadas no mesmo contexto sem esconder etapas obrigatórias.",variants:["Line","Contained"],sizes:["40px","44px touch"]},
+  {slug:"components/pagination.html",title:"Pagination",kind:"nav",description:"Navegação paginada para data sets com total, página atual e page size previsíveis.",variants:["Pages","Previous/next","Compact"],sizes:["40px controls"]},
+  {slug:"components/sidebar-navigation.html",title:"Side Navigation",kind:"nav",description:"Navegação principal administrativa com seleção, agrupamento e densidade inspiradas em Carbon.",variants:["Expanded","Collapsed","Mobile drawer"],sizes:["260px docs reference"]},
+  {slug:"components/header-topbar.html",title:"Header / Topbar",kind:"nav",description:"Contexto global, busca e ações de sessão sem competir com page actions.",variants:["Desktop","Mobile"],sizes:["52px admin"]},
+  {slug:"components/toolbar.html",title:"Toolbar",kind:"nav",description:"Agrupa controles contextuais de tabela, edição ou coleção.",variants:["Data","Editor","Bulk actions"],sizes:["40–48px"]},
+  {slug:"components/drawer.html",title:"Drawer",kind:"overlay",description:"Painel lateral para progressive disclosure sem perder contexto da lista/tela atual.",variants:["Left navigation","Right detail"],sizes:["320–480px desktop","Full mobile"]},
+  {slug:"components/page-header.html",title:"Page Header",kind:"nav",description:"Título, metadata, breadcrumbs e page actions com hierarquia operacional clara.",variants:["Base","With tabs","With status"],sizes:["Content driven"]},
+  {slug:"components/dropdown.html",title:"Dropdown",kind:"menu",description:"Trigger + floating menu para ações ou seleção contextual; fecha com Escape e click outside.",variants:["Actions","Single select","Split button only when justified"],sizes:["Min 200px"]},
+  {slug:"components/menu.html",title:"Menu",kind:"menu",description:"Lista de ações/choices temporária com keyboard navigation e grouping.",variants:["Action menu","Select-like","Nested only when needed"],sizes:["Min 200px"]},
+  {slug:"components/menu-item.html",title:"Menu Item",kind:"menu",description:"Unidade interativa de menu com label, icon, shortcut, selected/disabled e destructive states.",variants:["Action","Selected","Checkbox/radio","Destructive"],sizes:["36–40px"]},
+  {slug:"components/context-menu.html",title:"Context Menu",kind:"menu",description:"Menu contextual acionado por superfície/row quando as ações também permanecem acessíveis por keyboard e UI visível.",variants:["Row actions","Canvas actions"],sizes:["Min 200px"]},
+  {slug:"components/popover.html",title:"Popover",kind:"overlay",description:"Conteúdo contextual interativo ancorado a um trigger, maior que tooltip e menor que dialog.",variants:["Info","Actions","Form fragment"],sizes:["Content driven"]},
+];
+
+module.exports = { componentNavigationDefs };

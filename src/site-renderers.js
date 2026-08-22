@@ -9,6 +9,12 @@ function escapeHtml(value) {
     .replace(/'/g, "&#39;");
 }
 
+function slugify(value) {
+  return String(value ?? "section")
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "section";
+}
+
 function joinPath(...parts) {
   return parts.filter(Boolean).join("/").replace(/\\+/g, "/");
 }
@@ -23,7 +29,8 @@ function relativePrefix(filePath) {
 
 function navLink(item, activeNav, prefix) {
   const active = item.key === activeNav ? " is-active" : "";
-  return `<a class="nav-link${active}" href="${prefix}${item.href}"><span>${escapeHtml(item.label)}</span></a>`;
+  const current = active ? " aria-current=\"page\"" : "";
+  return `<a class="nav-link${active}" href="${prefix}${item.href}"${current}><span>${escapeHtml(item.label)}</span></a>`;
 }
 
 function renderSidebar(nav, activeNav, prefix) {
@@ -31,12 +38,12 @@ function renderSidebar(nav, activeNav, prefix) {
     <aside class="sidebar">
       <div class="sidebar__section sidebar__intro">
         <p class="sidebar__eyebrow">Imobiliaria DS</p>
-        <a class="sidebar__brand" href="${prefix}index.html">Admin-first</a>
-        <p class="sidebar__description">Identidade do imobiliaria-admin + arquitetura de interação Carbon. Referências tipo Airbnb ficam no site público.</p>
+        <a class="sidebar__brand" href="${prefix}index.html">Product library</a>
+        <p class="sidebar__description">Identidade do imobiliaria-admin + arquitetura de interação Carbon. Marketplace/Airbnb fica isolado no produto público.</p>
       </div>
       ${nav.map((group) => `
         <section class="sidebar__section">
-          <h2 class="sidebar__title">${escapeHtml(group.title)}</h2>
+          <div class="sidebar__heading"><h2 class="sidebar__title">${escapeHtml(group.title)}</h2><span class="sidebar__count">${group.items.length}</span></div>
           <div class="sidebar__links">${group.items.map((item) => navLink(item, activeNav, prefix)).join("")}</div>
         </section>
       `).join("")}
@@ -56,7 +63,7 @@ function renderHeader(page, prefix) {
         <div class="search-shell">
           <label class="search-field">
             <span class="sr-only">Buscar na documentação</span>
-            <input type="search" placeholder="Buscar páginas, componentes e tokens" data-doc-search />
+            <input type="search" placeholder="Buscar componentes, padrões e tokens" data-doc-search />
           </label>
           <div class="search-results" data-search-results></div>
         </div>
@@ -76,7 +83,7 @@ function renderPageShell({ page, prefix, nav, content }) {
     <link rel="stylesheet" href="${prefix}assets/css/tokens.css" />
     <link rel="stylesheet" href="${prefix}assets/css/styles.css" />
   </head>
-  <body>
+  <body data-doc-root="${prefix}">
     ${renderHeader(page, prefix)}
     <div class="shell" data-shell>
       ${renderSidebar(nav, page.nav, prefix)}
@@ -88,9 +95,10 @@ function renderPageShell({ page, prefix, nav, content }) {
 </html>`;
 }
 
-function section(title, subtitle, body, actions = "") {
+function section(title, subtitle, body, actions = "", id = "") {
+  const sectionId = id || slugify(title);
   return `
-    <section class="section">
+    <section class="section" id="${escapeHtml(sectionId)}">
       <div class="section__header">
         <div><p class="eyebrow">${escapeHtml(subtitle || "")}</p><h2>${escapeHtml(title)}</h2></div>
         ${actions}
@@ -139,4 +147,4 @@ function brandSwatches() {
   </div>`;
 }
 
-module.exports = { escapeHtml, joinPath, relativePrefix, renderPageShell, section, tokenTable, simpleCards, codeBlock, previewDevice, previewDeviceRow, doDont, callout, hero, pageArticle, brandSwatches };
+module.exports = { escapeHtml, slugify, joinPath, relativePrefix, renderPageShell, section, tokenTable, simpleCards, codeBlock, previewDevice, previewDeviceRow, doDont, callout, hero, pageArticle, brandSwatches };

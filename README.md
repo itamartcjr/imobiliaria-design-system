@@ -1,23 +1,45 @@
 # Imobiliaria Design System
 
-Design system oficial da plataforma imobiliária, com o `imobiliaria-admin` como fonte visual principal para produto e Carbon Design System como referência estrutural de interação para o ambiente administrativo.
+Design system oficial da plataforma imobiliária. O `imobiliaria-admin` é a fonte visual principal do produto, Carbon Design System é a referência funcional para interação administrativa e referências de marketplace ficam isoladas no site público.
 
 ## Hierarquia de referência
 
 1. **imobiliaria-admin — identidade principal**
-   - paleta, contraste, Manrope, densidade, spacing, radius e linguagem visual do produto;
-   - shell, navegação, coleções, formulários e fluxos operacionais partem do admin existente.
+   - paleta, contraste, Manrope, densidade, spacing, radius e linguagem visual;
+   - shell, navegação, coleções, formulários e fluxos operacionais partem do produto existente.
 2. **Carbon Design System — referência funcional do admin**
-   - anatomia e comportamento de controles;
-   - data tables, side navigation, headers, modais/painéis, notificações, estados, foco, acessibilidade e motion produtivo;
-   - Carbon orienta estrutura e interação, sem importar a identidade IBM.
-3. **imobiliaria-front / referências tipo Airbnb — somente site público**
-   - descoberta, busca de imóveis, cards com imagem, galeria, detalhe e composição editorial;
-   - não define paleta, radius, botões, densidade nem shell do admin.
+   - anatomia e comportamento de controls;
+   - data tables, side navigation, headers, dialogs/panels, notifications, states, focus, accessibility e productive motion;
+   - Carbon orienta estrutura e interação sem importar a identidade IBM.
+3. **imobiliaria-front / marketplace — somente site público**
+   - descoberta, property cards, busca, filtros, mapa, galeria, detalhe e composição editorial;
+   - não define paleta, radius, botões, densidade ou shell do admin.
+4. **Figma Community reference — cobertura, não identidade**
+   - serve como referência do nível de completude esperado: foundations, componentes, variantes, states, Auto Layout/variables e documentação ampla;
+   - não é referência para copiar glassmorphism, brand ou estética externa.
 
-## Regra de decisão
+## Contrato de documentação
 
-Quando houver conflito visual, o admin vence. Quando houver dúvida de interação administrativa, Carbon orienta. Referências de marketplace/hospitality ficam limitadas às experiências públicas.
+Cada componente documentado no HTML contém, no mínimo:
+
+- Overview
+- Live preview
+- Anatomy
+- Variants & sizes
+- States
+- Behavior
+- Accessibility
+- Testing
+- Do / Don't
+
+O catálogo atual gera mais de 120 páginas HTML entre foundations, core components, componentes imobiliários, patterns, testing, guidelines, resources e sitemap.
+
+## Sources
+
+A documentação de foundations/components/testing fornecida para o projeto foi preservada em:
+
+- `getting-started/sources.html` no site gerado;
+- `research/documentation-sources.md` no repositório.
 
 ## Build
 

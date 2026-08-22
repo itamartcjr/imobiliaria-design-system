@@ -99,7 +99,9 @@ const tokensRn = `export const tokens = ${JSON.stringify({ colors, spacing, radi
 fs.writeFileSync(path.join(generatedDir, "tokens.css"), tokenCss);
 fs.writeFileSync(path.join(generatedDir, "tokens.ts"), tokensTs);
 fs.writeFileSync(path.join(generatedDir, "tokens-react-native.ts"), tokensRn);
-fs.copyFileSync(path.join(root, "src", "assets", "css", "styles.css"), path.join(distCssDir, "styles.css"));
+for (const cssFile of fs.readdirSync(path.join(root, "src", "assets", "css")).filter((file) => file.endsWith(".css"))) {
+  fs.copyFileSync(path.join(root, "src", "assets", "css", cssFile), path.join(distCssDir, cssFile));
+}
 fs.writeFileSync(path.join(distCssDir, "tokens.css"), tokenCss);
 fs.writeFileSync(path.join(distJsDir, "noop.js"), "/* generated placeholder */\n");
 
