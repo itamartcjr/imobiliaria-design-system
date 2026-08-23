@@ -34,7 +34,25 @@ Cada componente documentado no HTML contém, no mínimo:
 
 O catálogo atual gera mais de 120 páginas estáticas entre foundations, core components, componentes imobiliários, patterns, testing, guidelines, resources e sitemap.
 
+## Regras atuais do produto administrativo
+
+Estas regras refletem o estado aprovado do `imobiliaria-admin` e têm precedência sobre specimens antigos:
+
+- a área de página não recebe padding externo global; header e conteúdo encostam no frame útil do workspace;
+- o `Page Header` possui seu próprio espaçamento interno: `space.5` (`20px`) horizontal e `space.3` (`12px`) vertical;
+- o conteúdo operacional abaixo do header usa gutter interno `space.4` (`16px`), salvo componentes que deliberadamente ocupam a largura total;
+- coleções com scroll mantêm `Page Header` + área de filtros no topo sticky; a lista/tabela rola abaixo desse conjunto;
+- ações compactas de header usam `Icon Button` de `42px`: filtro como ação neutra e criação como `+` primário, sempre com accessible name;
+- filtros ficam recolhidos por padrão. Ao abrir, a busca/filtro principal aparece primeiro e `Filtros avançados` revela as opções secundárias;
+- listas administrativas usam paginação de **20 registros por página** como padrão atual e mostram página, intervalo e total;
+- quando um campo de linha tem edição simples e segura, a edição pode acontecer inline por select/input sem obrigar abertura do detalhe;
+- painéis de detalhe abrem **dentro do workspace de conteúdo**. Expandir significa ocupar o workspace, não cobrir navegação global ou side navigation;
+- no CRM em quadro, arrastar um card continua movendo a negociação entre etapas; clicar e arrastar uma área vazia do quadro faz o scroll horizontal;
+- productive motion usa os tokens Carbon documentados (`70/110/150/240/400/700ms`) e respeita `prefers-reduced-motion`/redução de movimento do sistema.
+
 ## Regras de layout e navegação da documentação
+
+As regras abaixo são do site de documentação e não devem ser confundidas com o gutter do produto administrativo:
 
 - o canvas de conteúdo (`.content`) não recebe padding global;
 - `hero` e cada seção de documentação usam `space.6` (`24px`) como padding interno oficial; esse valor vem da Foundation de Spacing e não deve ser substituído por um gutter arbitrário;
@@ -47,6 +65,8 @@ O catálogo atual gera mais de 120 páginas estáticas entre foundations, core c
 ## Regra de precedência e sincronização
 
 A documentação aprovada é a fonte de verdade para decisões já registradas. A implementação deve seguir os tokens e regras documentados. Quando um pedido alterar uma decisão existente, a mudança deve atualizar **documentação + implementação no mesmo commit**. Não é permitido manter CSS, componentes ou patterns contradizendo a documentação, nem manter documentação descrevendo um estado anterior da implementação.
+
+Quando existir divergência entre um specimen antigo e o produto administrativo já corrigido, primeiro atualize este design system para representar o estado aprovado do admin; não reverta o admin para reproduzir o specimen antigo.
 
 ## Sources
 

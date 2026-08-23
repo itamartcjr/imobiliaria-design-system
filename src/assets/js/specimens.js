@@ -9,7 +9,7 @@ const btn=v=>/danger|destructive/.test(key(v))?'danger-button':/secondary|outlin
 function sample(t,v='Default',s='Default',i=1){
  const V=e(v),D=dis(s),K=key(t),C=/selected|checked|active|on/.test(key(s))?' checked':'';
  if(t==='Button')return `<button class="${btn(v)} family-size-${i}"${D}>${V}</button>`;
- if(/Icon Button/.test(t))return `<button class="family-icon"${D}>${/danger/.test(key(v))?'×':/ghost/.test(key(v))?'•••':'+'}</button>`;
+ if(/Icon Button/.test(t))return `<button class="family-icon" aria-label="${V}"${D}>${/danger/.test(key(v))?'×':/primary/.test(key(v))?'+':/ghost/.test(key(v))?'•••':'≡'}</button>`;
  if(/Button Group/.test(t))return `<div class="family-actions"><button class="secondary-button">Voltar</button><button class="primary-button">Salvar</button></div>`;
  if(/Badge|Status$/.test(t))return `<span class="badge ${badge(v)}">${V}</span>`;
  if(/Tag/.test(t))return `<span class="chip">${V} ×</span>`;
@@ -19,11 +19,14 @@ function sample(t,v='Default',s='Default',i=1){
  if(/Checkbox/.test(t))return `<label class="family-choice"><input type="checkbox"${C}${D}><span>${V}</span></label>`;
  if(/Radio/.test(t))return `<label class="family-choice"><input type="radio"${C}${D}><span>${V}</span></label>`;
  if(/Toggle/.test(t))return `<label class="family-toggle"><input type="checkbox"${C}${D}><i></i><span>${V}</span></label>`;
- if(/Menu|Dropdown|Filter|Sort/.test(t))return `<div class="family-menu"><b>${V}</b><span>Editar</span><span>Duplicar</span><span class="is-danger">Excluir</span></div>`;
+ if(t==='Filter')return `<div class="family-filter"><button class="family-icon" aria-label="Mostrar filtros">≡</button><div><label class="family-field"><span>Busca</span><input placeholder="Buscar"></label><button class="ghost-button">Filtros avançados⌄</button></div></div>`;
+ if(/Menu|Dropdown|Sort/.test(t))return `<div class="family-menu"><b>${V}</b><span>Editar</span><span>Duplicar</span><span class="is-danger">Excluir</span></div>`;
  if(/Tabs/.test(t))return `<nav class="family-tabs"><b>${V}</b><span>Detalhes</span><span>Histórico</span></nav>`;
  if(/Breadcrumb/.test(t))return `<div class="family-crumb">Imóveis / São Paulo / <b>${V}</b></div>`;
- if(/Pagination/.test(t))return `<div class="family-pages"><button>←</button><b>1</b><button>2</button><button>→</button></div>`;
+ if(/Pagination/.test(t))return `<div class="family-pages"><button>←</button><span>1–20 de 84</span><button>→</button></div>`;
  if(/Side Navigation/.test(t))return `<nav class="family-side"><b>Dashboard</b><span>Imóveis</span><span>Leads</span><span>Clientes</span></nav>`;
+ if(/Page Header/.test(t))return `<div class="family-bar family-bar--page"><b>${V}</b><span></span><button class="family-icon" aria-label="Mostrar filtros">≡</button><button class="family-icon family-icon--primary" aria-label="Criar">+</button></div>`;
+ if(/Table Toolbar/.test(t))return `<div class="family-bar family-bar--toolbar"><label class="family-toolbar-search"><input placeholder="Buscar"></label><span></span><button class="family-icon" aria-label="Mostrar filtros">≡</button><button class="family-icon family-icon--primary" aria-label="Criar">+</button></div>`;
  if(/Header|Topbar|Toolbar/.test(t))return `<div class="family-bar"><b>${V}</b><span></span><button class="secondary-button">Filtrar</button><button class="primary-button">Novo</button></div>`;
  if(/Tooltip/.test(t))return `<div class="family-tip">${V}</div>`;
  if(/Popover|Drawer|Dialog/.test(t))return `<div class="family-panel"><b>${V}</b><p>Conteúdo contextual do componente.</p><button class="primary-button">Confirmar</button></div>`;
