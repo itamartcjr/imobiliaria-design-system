@@ -2,7 +2,7 @@
 
 Este arquivo registra as fontes fornecidas para orientar a construção da documentação do design system. Elas são referências de método, escala, acessibilidade, grid, componentes e testing; não substituem a hierarquia visual oficial do produto.
 
-## EPISODE 1 — FOUNDATIONS
+## Foundations
 
 ### Type Scale
 
@@ -32,20 +32,24 @@ Este arquivo registra as fontes fornecidas para orientar a construção da docum
 
 - https://material.io/design/layout/responsive-layout-grid.html#columns-gutters-and-margins
 - https://material.io/design/layout/responsive-layout-grid.html#breakpoints
+- https://material.io/design/layout/responsive-layout-grid.html#grid-customization
 
 ### Shared Styles
 
 - https://betterwebtype.com/articles/2018/10/15/rhythm-in-web-typography/
 
-## EPISODE 2 — COMPONENTS
+## Components
+
+### Component and icon references
 
 - Material Design Responsive Layout Grids: https://material.io/design/layout/responsive-layout-grid.html#grid-customization
 - Icon Grids: https://www.youtube.com/watch?v=S9P7ob7Nx5I
 - Figma icon grid: https://www.figma.com/community/file/868494350497530898
+- Material Theming Design System: https://www.figma.com/community/file/809865700885504168
+- Primer Web Design System: https://www.figma.com/community/file/854767373644076713
+- iOS 14/iPadOS 14 UI Kit: https://www.figma.com/community/file/858143367356468985
 
-## EPISODE 3 — COMPONENTS CONTINUED
-
-Componentes explicitamente citados:
+### Componentes explicitamente citados
 
 - Tooltip
 - Media
@@ -53,21 +57,15 @@ Componentes explicitamente citados:
 - Textfield
 - Toggle
 - Checkbox
-
-## EPISODE 4 — TESTING YOUR COMPONENTS
-
-Componentes/assuntos explicitamente citados:
-
 - Dialog
 - Image sizes
 - Popover
 - Menu items
 
-Referências:
+## Testing
 
-- Material Theming Design System: https://www.figma.com/community/file/809865700885504168
-- Primer Web Design System: https://www.figma.com/community/file/854767373644076713
-- iOS 14/iPadOS 14 UI Kit: https://www.figma.com/community/file/858143367356468985
+### Plugins e ferramentas
+
 - Contrast: https://www.figma.com/community/plugin/748533339900865323/Contrast
 - Change Text: https://www.figma.com/community/plugin/735148445325474400/Change-Text
 - Content Reel: https://www.figma.com/community/plugin/731627216655469013/Content-Reel

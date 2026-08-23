@@ -17,8 +17,22 @@
 - o site público pode usar mais imagem, respiro e composição editorial sem contaminar o shell administrativo;
 - referências tipo Airbnb são permitidas em busca pública, cards de imóvel, galeria e detalhe, nunca como base visual do admin.
 
+## Documentação do design system
+
+- o canvas de cada página da documentação é edge-to-edge e não recebe padding global;
+- padding e spacing pertencem aos elementos internos que precisam de respiro, como cells, panels, specimens, forms, tables e cards reais;
+- a side navigation é um componente independente da página de conteúdo e permanece no mesmo nível visual entre rotas;
+- grupos da side navigation são colapsáveis por clique;
+- referências externas ficam fechadas por padrão em um painel `Referências` e são abertas sob demanda;
+- as rotas publicadas são estáticas e amigáveis ao GitHub Pages, geradas pelo Node em diretórios com `index.html`.
+
+## Regra de sincronização obrigatória
+
+Toda mudança de implementação que afete uma regra já documentada deve atualizar a documentação correspondente no mesmo commit. Isso inclui tokens, spacing, layout, navegação, comportamento, estados, nomenclatura, breakpoints, acessibilidade e padrões de produto. A documentação não pode descrever um estado anterior da implementação.
+
 ## Regra prática
 
 - conflito de identidade → seguir `imobiliaria-admin`;
 - conflito de interação administrativa → usar Carbon como referência;
-- necessidade de descoberta/merchandising público → consultar `imobiliaria-front` e referências de marketplace.
+- necessidade de descoberta/merchandising público → consultar `imobiliaria-front` e referências de marketplace;
+- mudança de implementação documentada → atualizar implementação e documentação juntas.

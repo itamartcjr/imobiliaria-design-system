@@ -1,8 +1,10 @@
 (function () {
   const root = document.documentElement;
   const storageKey = "imobiliaria-ds-theme";
+  const sidebarScrollKey = "imobiliaria-ds-sidebar-scroll";
   const themeToggle = document.querySelector("[data-theme-toggle]");
   const shell = document.querySelector("[data-shell]");
+  const sidebar = document.querySelector("[data-sidebar-scroll]");
   const sidebarToggle = document.querySelector("[data-toggle-sidebar]");
   const searchInput = document.querySelector("[data-doc-search]");
   const searchResults = document.querySelector("[data-search-results]");
@@ -27,8 +29,17 @@
     });
   }
 
+  if (sidebar) {
+    const savedScroll = Number(safeStorage(() => sessionStorage.getItem(sidebarScrollKey), "0")) || 0;
+    requestAnimationFrame(() => { sidebar.scrollTop = savedScroll; });
+    sidebar.addEventListener("scroll", () => safeStorage(() => sessionStorage.setItem(sidebarScrollKey, String(sidebar.scrollTop))), { passive: true });
+  }
+
   if (sidebarToggle && shell) sidebarToggle.addEventListener("click", () => shell.classList.toggle("is-sidebar-open"));
-  document.querySelectorAll(".sidebar a").forEach((link) => link.addEventListener("click", () => shell?.classList.remove("is-sidebar-open")));
+  document.querySelectorAll(".sidebar a").forEach((link) => link.addEventListener("click", () => {
+    if (sidebar) safeStorage(() => sessionStorage.setItem(sidebarScrollKey, String(sidebar.scrollTop)));
+    shell?.classList.remove("is-sidebar-open");
+  }));
 
   const index = window.DESIGN_SYSTEM_SEARCH_INDEX || [];
   function renderSearchResults(value) {

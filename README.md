@@ -32,13 +32,25 @@ Cada componente documentado no HTML contém, no mínimo:
 - Testing
 - Do / Don't
 
-O catálogo atual gera mais de 120 páginas HTML entre foundations, core components, componentes imobiliários, patterns, testing, guidelines, resources e sitemap.
+O catálogo atual gera mais de 120 páginas estáticas entre foundations, core components, componentes imobiliários, patterns, testing, guidelines, resources e sitemap.
+
+## Regras de layout e navegação da documentação
+
+- o canvas de conteúdo não recebe padding global; spacing pertence ao conteúdo interno de cada specimen, tabela, formulário, painel ou bloco que realmente precisa de respiro;
+- a side navigation é um componente independente da página de informação e permanece no mesmo nível visual entre rotas;
+- os grupos da side navigation são colapsáveis e abrem/fecham ao clicar no cabeçalho do grupo;
+- referências externas ficam recolhidas por padrão em um painel `Referências`;
+- a saída do Node usa rotas estáticas amigáveis, por exemplo `/components/button/` e `/foundations/colors/`, adequadas ao GitHub Pages.
+
+## Regra de sincronização
+
+Implementação e documentação são uma única mudança. Se um pedido alterar comportamento, tokens, spacing, layout, navegação, estados, nomenclatura ou qualquer decisão que já esteja documentada, a documentação relacionada deve ser atualizada no mesmo commit. Não é permitido deixar uma regra antiga contradizendo a implementação atual.
 
 ## Sources
 
-A documentação de foundations/components/testing fornecida para o projeto foi preservada em:
+As referências de foundations, components e testing fornecidas para o projeto são preservadas por nome em:
 
-- `getting-started/sources.html` no site gerado;
+- `getting-started/sources/` no site gerado;
 - `research/documentation-sources.md` no repositório.
 
 ## Build
@@ -49,4 +61,4 @@ npm run validate
 npm run dev
 ```
 
-A saída estática é gerada em `dist/`.
+A saída estática é gerada em `dist/` e publicada pelo workflow do GitHub Pages após build e validação.

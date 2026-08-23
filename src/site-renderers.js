@@ -1,11 +1,12 @@
 const path = require("node:path");
+const { renderSidebar } = require("./site-components/sidebar");
 
 function escapeHtml(value) {
   return String(value ?? "")
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
+    .replace(/\"/g, "&quot;")
     .replace(/'/g, "&#39;");
 }
 
@@ -27,27 +28,21 @@ function relativePrefix(filePath) {
   return depth ? "../".repeat(depth) : "./";
 }
 
-function navLink(item, activeNav, prefix) {
-  const active = item.key === activeNav ? " is-active" : "";
-  const current = active ? " aria-current=\"page\"" : "";
-  return `<a class="nav-link${active}" href="${prefix}${item.href}"${current}><span>${escapeHtml(item.label)}</span></a>`;
+function cleanSectionTitle(value) {
+  const raw = String(value ?? "");
+  return raw.replace(/^Episodes?\s*[0-9\s–—\-\/]+(?:·\s*)?/i, "").trim() || raw;
 }
 
-function renderSidebar(nav, activeNav, prefix) {
-  return `
-    <aside class="sidebar">
-      <div class="sidebar__section sidebar__intro">
-        <p class="sidebar__eyebrow">Imobiliaria DS</p>
-        <a class="sidebar__brand" href="${prefix}index.html">Product library</a>
-        <p class="sidebar__description">Identidade do imobiliaria-admin + arquitetura de interação Carbon. Marketplace/Airbnb fica isolado no produto público.</p>
-      </div>
-      ${nav.map((group) => `
-        <section class="sidebar__section">
-          <div class="sidebar__heading"><h2 class="sidebar__title">${escapeHtml(group.title)}</h2><span class="sidebar__count">${group.items.length}</span></div>
-          <div class="sidebar__links">${group.items.map((item) => navLink(item, activeNav, prefix)).join("")}</div>
-        </section>
-      `).join("")}
-    </aside>`;
+function cleanSectionSubtitle(value) {
+  const raw = String(value ?? "").trim();
+  return /episodes?/i.test(raw) ? "" : raw;
+}
+
+function wrapReferenceLists(content) {
+  return String(content ?? "").replace(
+    /<div class="reference-list">([\s\S]*?)<\/div>/g,
+    `<details class="reference-panel"><summary><span>Referências</span><span class="reference-panel__state">Abrir</span></summary><div class="reference-panel__body"><div class="reference-list">$1</div></div></details>`
+  );
 }
 
 function renderHeader(page, prefix) {
@@ -73,6 +68,7 @@ function renderHeader(page, prefix) {
 }
 
 function renderPageShell({ page, prefix, nav, content }) {
+  const renderedContent = wrapReferenceLists(content);
   return `<!doctype html>
 <html lang="pt-BR" data-theme="dark">
   <head>
@@ -87,7 +83,7 @@ function renderPageShell({ page, prefix, nav, content }) {
     ${renderHeader(page, prefix)}
     <div class="shell" data-shell>
       ${renderSidebar(nav, page.nav, prefix)}
-      <main class="content">${content}</main>
+      <main class="content" data-page-content>${renderedContent}</main>
     </div>
     <script src="${prefix}assets/js/search-index.js"></script>
     <script src="${prefix}assets/js/app.js"></script>
@@ -97,10 +93,13 @@ function renderPageShell({ page, prefix, nav, content }) {
 
 function section(title, subtitle, body, actions = "", id = "") {
   const sectionId = id || slugify(title);
+  const cleanTitle = cleanSectionTitle(title);
+  const cleanSubtitle = cleanSectionSubtitle(subtitle);
+  const eyebrow = cleanSubtitle ? `<p class="eyebrow">${escapeHtml(cleanSubtitle)}</p>` : "";
   return `
     <section class="section" id="${escapeHtml(sectionId)}">
       <div class="section__header">
-        <div><p class="eyebrow">${escapeHtml(subtitle || "")}</p><h2>${escapeHtml(title)}</h2></div>
+        <div>${eyebrow}<h2>${escapeHtml(cleanTitle)}</h2></div>
         ${actions}
       </div>
       <div class="section__body">${body}</div>
