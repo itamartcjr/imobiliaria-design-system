@@ -19,20 +19,22 @@
 
 ## Documentação do design system
 
-- o canvas de cada página da documentação é edge-to-edge e não recebe padding global;
-- padding e spacing pertencem aos elementos internos que precisam de respiro, como cells, panels, specimens, forms, tables e cards reais;
+- o canvas de cada página da documentação (`.content`) é edge-to-edge e não recebe padding global;
+- `hero` e cada `.section` recebem `space.6` (`24px`) de padding interno, conforme a Foundation de Spacing;
+- padding adicional pertence aos elementos internos que precisam de respiro, como cells, panels, specimens, forms, tables e cards reais, e deve usar tokens documentados;
 - a side navigation é um componente independente da página de conteúdo e permanece no mesmo nível visual entre rotas;
 - grupos da side navigation são colapsáveis por clique;
 - referências externas ficam fechadas por padrão em um painel `Referências` e são abertas sob demanda;
 - as rotas publicadas são estáticas e amigáveis ao GitHub Pages, geradas pelo Node em diretórios com `index.html`.
 
-## Regra de sincronização obrigatória
+## Regra de precedência e sincronização obrigatória
 
-Toda mudança de implementação que afete uma regra já documentada deve atualizar a documentação correspondente no mesmo commit. Isso inclui tokens, spacing, layout, navegação, comportamento, estados, nomenclatura, breakpoints, acessibilidade e padrões de produto. A documentação não pode descrever um estado anterior da implementação.
+A documentação aprovada é a resolução principal para decisões já registradas. A implementação deve consumir os tokens e comportamentos documentados. Toda mudança que afete uma regra existente deve atualizar a documentação correspondente e a implementação no mesmo commit. Isso inclui tokens, spacing, layout, navegação, comportamento, estados, nomenclatura, breakpoints, acessibilidade e padrões de produto.
 
 ## Regra prática
 
 - conflito de identidade → seguir `imobiliaria-admin`;
 - conflito de interação administrativa → usar Carbon como referência;
 - necessidade de descoberta/merchandising público → consultar `imobiliaria-front` e referências de marketplace;
-- mudança de implementação documentada → atualizar implementação e documentação juntas.
+- divergência entre implementação e documentação aprovada → corrigir a implementação para a documentação;
+- pedido que muda uma regra documentada → atualizar documentação e implementação juntas.

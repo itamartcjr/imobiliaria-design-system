@@ -36,15 +36,17 @@ O catálogo atual gera mais de 120 páginas estáticas entre foundations, core c
 
 ## Regras de layout e navegação da documentação
 
-- o canvas de conteúdo não recebe padding global; spacing pertence ao conteúdo interno de cada specimen, tabela, formulário, painel ou bloco que realmente precisa de respiro;
+- o canvas de conteúdo (`.content`) não recebe padding global;
+- `hero` e cada seção de documentação usam `space.6` (`24px`) como padding interno oficial; esse valor vem da Foundation de Spacing e não deve ser substituído por um gutter arbitrário;
+- specimens, tabelas, formulários, panels, cells e cards reais podem ter spacing interno próprio quando a documentação do componente exigir;
 - a side navigation é um componente independente da página de informação e permanece no mesmo nível visual entre rotas;
 - os grupos da side navigation são colapsáveis e abrem/fecham ao clicar no cabeçalho do grupo;
 - referências externas ficam recolhidas por padrão em um painel `Referências`;
 - a saída do Node usa rotas estáticas amigáveis, por exemplo `/components/button/` e `/foundations/colors/`, adequadas ao GitHub Pages.
 
-## Regra de sincronização
+## Regra de precedência e sincronização
 
-Implementação e documentação são uma única mudança. Se um pedido alterar comportamento, tokens, spacing, layout, navegação, estados, nomenclatura ou qualquer decisão que já esteja documentada, a documentação relacionada deve ser atualizada no mesmo commit. Não é permitido deixar uma regra antiga contradizendo a implementação atual.
+A documentação aprovada é a fonte de verdade para decisões já registradas. A implementação deve seguir os tokens e regras documentados. Quando um pedido alterar uma decisão existente, a mudança deve atualizar **documentação + implementação no mesmo commit**. Não é permitido manter CSS, componentes ou patterns contradizendo a documentação, nem manter documentação descrevendo um estado anterior da implementação.
 
 ## Sources
 
